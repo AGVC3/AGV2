@@ -14,6 +14,8 @@ public class BluetoothModule implements Updatable{
         if (conn.available() > 0) {
             int data = conn.readByte();
             char character = (char)data;
+
         }
+
     }
 }

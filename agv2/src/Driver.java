@@ -26,5 +26,11 @@ public class Driver {
         this.right.emergencyBreak();
     }
 
+    public Wheel getLeft() {
+        return left;
+    }
 
+    public Wheel getRight() {
+        return right;
+    }
 }
