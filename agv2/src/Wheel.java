@@ -1,11 +1,10 @@
 import TI.Servo;
 
-public class Wheel implements Updatable{
+public class Wheel implements Updatable {
 
     private int speed;
     private int targetSpeed;
     private String direction;
-
     private Servo wheel;
 
     public Wheel (int pin, String direction) {
@@ -13,7 +12,6 @@ public class Wheel implements Updatable{
         this.speed = 1500;
         this.targetSpeed = 1500;
         this.direction = direction;
-
     }
 
     @Override
