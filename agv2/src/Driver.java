@@ -27,10 +27,10 @@ public class Driver {
     }
 
     public Wheel getLeft() {
-        return left;
+        return this.left;
     }
 
     public Wheel getRight() {
-        return right;
+        return this.right;
     }
 }

@@ -1,6 +1,6 @@
 import TI.SerialConnection;
 
-public class BluetoothModule implements Updatable{
+public class BluetoothModule implements Updatable {
 
     private SerialConnection conn;
 
@@ -8,14 +8,10 @@ public class BluetoothModule implements Updatable{
         this.conn = new SerialConnection(115200);
     }
 
-
-    @Override
     public void update() {
-        if (conn.available() > 0) {
-            int data = conn.readByte();
+        if (this.conn.available() > 0) {
+            int data = this.conn.readByte();
             char character = (char)data;
-
         }
-
     }
 }

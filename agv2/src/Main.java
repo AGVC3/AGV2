@@ -8,7 +8,7 @@ public class Main {
 
         while (true) {
             barrie.updateAll();
-            BoeBot.wait(10000);
+            BoeBot.wait(1);
         }
     }
 }
