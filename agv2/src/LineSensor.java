@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 public class LineSensor implements Updatable {
 
-    private LineSensorCallback lineDetect;
+    private LineSensorCallback callback;
 
-    public LineSensor(LineSensorCallback lineDetect) {
-        this.lineDetect = lineDetect;
+    public LineSensor(LineSensorCallback callback) {
+        this.callback = callback;
     }
 
     public void update() {
@@ -29,6 +29,6 @@ public class LineSensor implements Updatable {
             linesDetected.add(false);
         }
 
-        this.lineDetect.lineSensorDetect(linesDetected);
+        this.callback.lineSensorDetect(linesDetected);
     }
 }

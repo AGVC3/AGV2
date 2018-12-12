@@ -38,4 +38,8 @@ public class Wheel implements Updatable {
         this.targetSpeed = 1500;
         this.speed = 1500;
     }
+
+    public int getSpeed() {
+        return this.speed;
+    }
 }

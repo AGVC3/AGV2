@@ -2,10 +2,10 @@ import TI.BoeBot;
 
 public class UltrasoneSensor implements Updatable {
 
-    private UltrasoneSensorCallback onDetect;
+    private UltrasoneSensorCallback callback;
 
-    public UltrasoneSensor(UltrasoneSensorCallback onDetect) {
-        this.onDetect = onDetect;
+    public UltrasoneSensor(UltrasoneSensorCallback callback) {
+        this.callback = callback;
     }
 
     public void update() {
@@ -14,6 +14,6 @@ public class UltrasoneSensor implements Updatable {
         BoeBot.digitalWrite(10, false);
 
         int pulse = BoeBot.pulseIn(11, true, 10000);
-        this.onDetect.ultrasoneDetect(pulse);
+        this.callback.ultrasoneDetect(pulse);
     }
 }
