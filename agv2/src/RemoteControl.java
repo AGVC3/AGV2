@@ -1,4 +1,4 @@
-public class RemoteControl implements Updatable {
+public class RemoteControl {
 
     public RemoteControl() {
 

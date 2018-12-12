@@ -7,18 +7,18 @@ public class Robot implements LineSensorCallback, UltrasoneSensorCallback, Bluet
     private Driver driver;
     private Notifications notifications;
     private LineFollowing lineFollowing;
+    private RemoteControl remoteControl;
 
     public Robot() {
         this.driver = new Driver();
         this.notifications = new Notifications(15, 6);
         this.lineFollowing = new LineFollowing(this.driver);
+        this.remoteControl = new RemoteControl(this.driver);
         this.routeInstructions = new ArrayList<>();
 
         this.updatables = new ArrayList<>();
-
         this.updatables.add(new LineSensor(this));
         this.updatables.add(new UltrasoneSensor(this));
-        this.updatables.add(new RemoteControl());
         this.updatables.add(new BluetoothModule(this));
         this.updatables.add(this.driver.getLeft());
         this.updatables.add(this.driver.getRight());
@@ -63,6 +63,6 @@ public class Robot implements LineSensorCallback, UltrasoneSensorCallback, Bluet
     }
 
     public void bluetoothDetect(char character) {
-
+        this.remoteControl.dataToAction(character);
     }
 }
