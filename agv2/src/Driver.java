@@ -1,3 +1,5 @@
+import TI.Timer;
+
 public class Driver {
 
     private Wheel left;
@@ -18,6 +20,28 @@ public class Driver {
             this.right.setTargetSpeed(1600);
         } else if (turnDirection.equals("Right")) {
             this.left.setTargetSpeed(1600);
+        }
+    }
+
+    public void turnWhileDriving(String turnDirection) {
+        if (turnDirection.equals("Left")) {
+            this.left.setTargetSpeed(1620);
+            this.right.setTargetSpeed(1520);
+        } else if (turnDirection.equals("Right")) {
+            this.right.setTargetSpeed(1620);
+            this.left.setTargetSpeed(1520);
+        }
+    }
+
+    public void action(String actionString) {
+        Timer timer = new Timer(100);
+        if (actionString.equals("Right")) {
+            while (true) {
+                turnWhileDriving("Left");
+                if (timer.timeout()) {
+                    break;
+                }
+            }
         }
     }
 

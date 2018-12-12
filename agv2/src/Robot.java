@@ -1,3 +1,5 @@
+import TI.BoeBot;
+
 import java.util.ArrayList;
 
 public class Robot implements LineSensorCallback, UltrasoneSensorCallback, BluetoothModuleCallback {
@@ -12,7 +14,7 @@ public class Robot implements LineSensorCallback, UltrasoneSensorCallback, Bluet
     public Robot() {
         this.driver = new Driver();
         this.notifications = new Notifications(15, 6);
-        this.lineFollowing = new LineFollowing(this.driver);
+        //this.lineFollowing = new LineFollowing(this.driver);
         this.remoteControl = new RemoteControl(this.driver);
         this.routeInstructions = new ArrayList<>();
 
@@ -31,38 +33,46 @@ public class Robot implements LineSensorCallback, UltrasoneSensorCallback, Bluet
     }
 
     public void lineSensorDetect(ArrayList<Boolean> linesDetected) {
-        System.out.println(linesDetected);
+        //System.out.println(linesDetected);
         if (!linesDetected.get(0) && linesDetected.get(1) && !linesDetected.get(2)) { //straight forward
-            this.lineFollowing.straightForward();
+            this.driver.goToSpeed(1550);
+//            this.lineFollowing.straightForward();
         } else if (linesDetected.get(0) && !linesDetected.get(1) && !linesDetected.get(2)) { //turn to the left
-            this.lineFollowing.turn("Right");
+            this.driver.turnWhileDriving("Right");
         } else if (!linesDetected.get(0) && !linesDetected.get(1) && linesDetected.get(2)) { //turn to the right
-            this.lineFollowing.turn("Left");
+            this.driver.turnWhileDriving("Left");
         } else if (linesDetected.get(0) && linesDetected.get(1) && linesDetected.get(2) && this.driver.getLeft().getSpeed() > 1500) { //crossroads logic
-            this.lineFollowing.crossRoadStopAndDriveBackwards();
-        } else if (linesDetected.get(0) && linesDetected.get(1) && linesDetected.get(2) && this.driver.getLeft().getSpeed() < 1500) {
-            this.lineFollowing.turn(this.lineFollowing.getInstructions().get(this.lineFollowing.getInstructions().size() - 1));
-            this.lineFollowing.getInstructions().remove(this.lineFollowing.getInstructions().size() - 1);
-        } else {
+            this.driver.goToSpeed(1450);
+        } else if (linesDetected.get(0) && linesDetected.get(1) && linesDetected.get(2) && this.driver.getLeft().getSpeed() <= 1500) {
             this.driver.emergencyBreak();
+            //this.driver.action("Right");
+
+//            this.lineFollowing.turn(this.lineFollowing.getInstructions().get(this.lineFollowing.getInstructions().size() - 1));
+//            this.lineFollowing.getInstructions().remove(this.lineFollowing.getInstructions().size() - 1);
         }
     }
 
     public void ultrasoneDetect(int pulse) {
-        System.out.println(pulse);
-        if (pulse > 17 && pulse < 500) {
-            this.driver.goToSpeed(1400);
+
+        if (pulse > 17 && pulse < 300) {
+            this.driver.goToSpeed(1490);
+
+            System.out.println(pulse);
+
             this.notifications.noiseDrivingBackwards();
-        } else if (pulse > 500 && pulse < 1000) {
-            this.driver.emergencyBreak();
+        } else if (pulse > 300 && pulse < 1000) {
+            this.driver.goToSpeed(1490);
+            System.out.println(pulse);
+
             this.notifications.ledOn();
             this.notifications.truckHorn();
         } else {
-            this.driver.goToSpeed(1600);
+            this.notifications.ledOff();
         }
     }
 
     public void bluetoothDetect(char character) {
+        System.out.println(character);
         this.remoteControl.dataToAction(character);
     }
 }

@@ -5,9 +5,11 @@ import java.util.ArrayList;
 public class LineSensor implements Updatable {
 
     private LineSensorCallback callback;
+    private boolean state;
 
     public LineSensor(LineSensorCallback callback) {
         this.callback = callback;
+        this.state = true;
     }
 
     public void update() {
@@ -29,6 +31,17 @@ public class LineSensor implements Updatable {
             linesDetected.add(false);
         }
 
-        this.callback.lineSensorDetect(linesDetected);
+        if (state) {
+            this.callback.lineSensorDetect(linesDetected);
+        }
     }
+
+    public boolean getState() {
+        return state;
+    }
+
+    public void setState(boolean state) {
+        this.state = state;
+    }
+
 }

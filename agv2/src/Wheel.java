@@ -18,9 +18,9 @@ public class Wheel implements Updatable {
     public void update() {
         if (this.speed != this.targetSpeed) {
             if (this.speed < this.targetSpeed) {
-                this.speed += 2;
+                this.speed += 5;
             } else {
-                this.speed -= 2;
+                this.speed -= 5;
             }
         }
         if (this.direction.equals("Left")) {
@@ -32,6 +32,10 @@ public class Wheel implements Updatable {
 
     public void setTargetSpeed(int targetSpeed) {
         this.targetSpeed = targetSpeed;
+    }
+
+    public int getTargetSpeed() {
+        return this.targetSpeed;
     }
 
     public void emergencyBreak (){
