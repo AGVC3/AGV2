@@ -1,9 +1,11 @@
 public class RemoteControl {
 
     private Driver driver;
+    private LineSensorControl lineSensorControl;
 
-    public RemoteControl(Driver driver) {
+    public RemoteControl(Driver driver, LineSensorControl lineSensorControl) {
         this.driver = driver;
+        this.lineSensorControl = lineSensorControl;
     }
 
     public void dataToAction(char character) {
@@ -26,10 +28,10 @@ public class RemoteControl {
             case 'g':
                 this.driver.emergencyBreak();
                 break;
+            case 'h':
+                this.lineSensorControl.setState(!this.lineSensorControl.getState());
             default:
                 break;
         }
     }
-
-
 }
