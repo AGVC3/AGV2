@@ -13,10 +13,10 @@ public class LED {
     }
 
     public void ledOn() {
-        BoeBot.digitalWrite(this.pin, true);
+        BoeBot.digitalWrite(this.pin, false);
     }
 
     public void ledOff() {
-        BoeBot.digitalWrite(this.pin, false);
+        BoeBot.digitalWrite(this.pin, true);
     }
 }

@@ -1,3 +1,5 @@
+import TI.Timer;
+
 public class Driver {
 
     private Wheel left;
@@ -21,6 +23,38 @@ public class Driver {
         }
     }
 
+    public void turnWhileDriving(String turnDirection) {
+        if (turnDirection.equals("Left")) {
+            this.left.setTargetSpeed(1620);
+            this.right.setTargetSpeed(1520);
+        } else if (turnDirection.equals("Right")) {
+            this.right.setTargetSpeed(1620);
+            this.left.setTargetSpeed(1520);
+        }
+    }
+
+    public void action(String actionString) {
+        Timer timer = new Timer(100);
+        if (actionString.equals("Right")) {
+            while (true) {
+                turnWhileDriving("Left");
+                if (timer.timeout()) {
+                    break;
+                }
+            }
+        }
+    }
+
+    public void turnSharp(String turnDirection) {
+        if (turnDirection.equals("Left")) {
+            this.right.setTargetSpeed(1550);
+            this.left.setTargetSpeed(1450);
+        } else if (turnDirection.equals("Right")) {
+            this.left.setTargetSpeed(1550);
+            this.right.setTargetSpeed(1450);
+        }
+    }
+
     public void emergencyBreak() {
         this.left.emergencyBreak();
         this.right.emergencyBreak();
@@ -32,5 +66,9 @@ public class Driver {
 
     public Wheel getRight() {
         return this.right;
+    }
+
+    public int getSpeed() {
+        return this.left.getSpeed();
     }
 }
