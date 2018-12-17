@@ -16,11 +16,12 @@ public class Robot implements LineSensorCallback, UltrasoneSensorCallback, Bluet
         this.driver = new Driver();
         this.notifications = new Notifications(15, 6);
         this.lineFollowing = new LineFollowing(this.driver, this);
-        //this.remoteControl = new RemoteControl(this.driver);
         this.lineSensorControl = new LineSensorControl(this);
+        this.remoteControl = new RemoteControl(this.driver,lineSensorControl);
         this.routeInstructions = new ArrayList<>();
 
         this.updatables = new ArrayList<>();
+        this.updatables.add(lineFollowing);
         this.updatables.add(lineSensorControl);
         this.updatables.add(new UltrasoneSensor(this));
         this.updatables.add(new BluetoothModule(this));
@@ -35,7 +36,7 @@ public class Robot implements LineSensorCallback, UltrasoneSensorCallback, Bluet
     }
 
     public void lineSensorDetect(ArrayList<Boolean> linesDetected) {
-        System.out.println(linesDetected);
+        //System.out.println(linesDetected);
         if (!linesDetected.get(0) && linesDetected.get(1) && !linesDetected.get(2)) { //straight forward
             this.driver.goToSpeed(1550);
         } else if (linesDetected.get(0) && !linesDetected.get(1) && !linesDetected.get(2)) { //turn to the left
@@ -43,32 +44,36 @@ public class Robot implements LineSensorCallback, UltrasoneSensorCallback, Bluet
         } else if (!linesDetected.get(0) && !linesDetected.get(1) && linesDetected.get(2)) { //turn to the right
             this.driver.turnWhileDriving("Left");
         } else if (linesDetected.get(0) && linesDetected.get(1) && linesDetected.get(2) && this.driver.getLeft().getSpeed() > 1500) { //crossroads logic
-            this.driver.goToSpeed(1450);
+            this.driver.goToSpeed(1500);
         } else if (linesDetected.get(0) && linesDetected.get(1) && linesDetected.get(2) && this.driver.getLeft().getSpeed() <= 1500) {
-            this.driver.emergencyBreak();
+            this.driver.goToSpeed(1500);
+            this.lineSensorControl.setState(false);
             this.lineFollowing.dataToAction();
         }
     }
 
     public void lineFollowingLogic() {
-        if (this.lineFollowing.getCurrentAction().isEmpty()) {
+        if (this.lineFollowing.getCurrentAction().equals("")) {
             return;
         }
-        if (this.lineFollowing.getTimer().timeout() && this.lineSensorControl.getState() == true) {                     //When an action is present but the linefollowers are still on
-            this.lineSensorControl.setState(false);                                                                     //Turn off the linesensors
+
+        if (!this.lineSensorControl.getState()) {                                                                       //When an action is present but the linefollowers are still on
+
             if (this.lineFollowing.getCurrentAction().equals("R")) {                                                    //Do whatever action is necessary
+
                 this.driver.turn("Right");
+
             } else if (this.lineFollowing.getCurrentAction().equals("L")) {
+
                 this.driver.turn("Left");
+
             } else if (this.lineFollowing.getCurrentAction().equals("F")) {
+
                 this.driver.goToSpeed(1550);
+
             } else if (this.lineFollowing.getCurrentAction().equals("D")) {
-                this.notifications.ledOn();
-                this.notifications.truckHorn();
+
             }
-        } else if (this.lineFollowing.getTimer().timeout() && this.lineSensorControl.getState() == false) {             //If an action is present and the linefollowers are of, turn them on and clear the action
-            this.lineSensorControl.setState(true);
-            this.lineFollowing.setCurrentAction("");
         }
     }
 

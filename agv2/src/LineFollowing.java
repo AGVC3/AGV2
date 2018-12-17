@@ -4,7 +4,7 @@ import TI.Timer;
 import javax.security.auth.callback.Callback;
 import java.util.ArrayList;
 
-public class LineFollowing implements Updatable{
+public class LineFollowing implements Updatable {
 
     private Driver driver;
     private ArrayList<String> instructions;
@@ -16,18 +16,25 @@ public class LineFollowing implements Updatable{
     public LineFollowing(Driver driver, LineFollowingCallback callback) {
         this.driver = driver;
         this.currentAction = "";
-        this.timer = new Timer(300);
+        this.timer = new Timer(1000);
         this.callback = callback;
         this.instructions = new ArrayList<>();
         this.instructions.add("D");
-        this.instructions.add("L");
-        this.instructions.add("F");
         this.instructions.add("R");
+        this.instructions.add("F");
+
+
     }
 
-    public void dataToAction(){
-        this.currentAction = this.instructions.get(this.instructions.size()-1);
-        this.instructions.remove(this.instructions.size()-1);
+    public void dataToAction() {
+        try {
+            this.currentAction = this.instructions.get(this.instructions.size() - 1);
+            this.instructions.remove(this.instructions.size() - 1);
+            System.out.println("current action: " + currentAction);
+        } catch (Exception e) {
+            //System.out.println("Exception");
+        }
+
     }
 
     @Override

@@ -10,7 +10,7 @@ public class LineSensor{
     }
 
     public boolean isState() {
-        if (BoeBot.analogRead(pin) > 1000) {
+        if (BoeBot.analogRead(pin) > 1500) {
             return true;
         } else {
             return false;

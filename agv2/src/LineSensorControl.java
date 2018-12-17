@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class LineSensorControl implements Updatable {
 
     Timer timer = new Timer(50);
+    Timer timerLine = new Timer(600);
     private boolean state;
     private LineSensor leftSensor;
     private LineSensor middleSensor;
@@ -13,9 +14,9 @@ public class LineSensorControl implements Updatable {
     private LineSensorCallback callback;
 
     public LineSensorControl(LineSensorCallback callback) {
-        this.leftSensor = new LineSensor(0);
+        this.leftSensor = new LineSensor(2);
         this.middleSensor = new LineSensor(1);
-        this.rightSensor = new LineSensor(2);
+        this.rightSensor = new LineSensor(0);
         this.callback = callback;
         this.state = true;
     }
@@ -30,6 +31,10 @@ public class LineSensorControl implements Updatable {
                 this.callback.lineSensorDetect(linesDetected);
             }
         }
+        if (timerLine.timeout()) {
+            this.state = true;
+        }
+
     }
 
     public boolean getState() {
