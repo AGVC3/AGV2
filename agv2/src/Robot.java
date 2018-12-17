@@ -1,5 +1,3 @@
-package com.alg;
-
 import java.util.ArrayList;
 
 public class Robot implements LineSensorCallback, UltrasoneSensorCallback, RemoteControlCallback {

@@ -1,7 +1,4 @@
-package com.alg;
-
 import TI.SerialConnection;
-
 
 public class BluetoothModule implements Updatable {
 

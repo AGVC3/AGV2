@@ -1,5 +1,3 @@
-package com.alg;
-
 public class Speaker {
 
     private int pin;

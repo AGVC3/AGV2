@@ -1,5 +1,3 @@
-package com.alg;
-
 import TI.Servo;
 
 public class Wheel implements Updatable {

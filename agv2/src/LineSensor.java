@@ -1,5 +1,3 @@
-package com.alg;
-
 import TI.BoeBot;
 
 import java.util.ArrayList;

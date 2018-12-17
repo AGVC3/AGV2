@@ -1,10 +1,14 @@
-package com.alg;
-
-import TI.
+import TI.BoeBot;
 
 public class Main {
 
     public static void main(String[] args) {
-	// write your code here
+
+        Robot barrie = new Robot();
+
+        while (true) {
+            barrie.updateAll();
+            BoeBot.wait(1);
+        }
     }
 }
