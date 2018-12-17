@@ -2,7 +2,7 @@ import TI.BoeBot;
 
 import java.util.ArrayList;
 
-public class Robot implements LineSensorCallback, UltrasoneSensorCallback, BluetoothModuleCallback {
+public class Robot implements LineSensorCallback, UltrasoneSensorCallback, BluetoothModuleCallback, LineFollowingCallback {
 
     private ArrayList<Updatable> updatables;
     private ArrayList<String> routeInstructions;
@@ -15,8 +15,8 @@ public class Robot implements LineSensorCallback, UltrasoneSensorCallback, Bluet
     public Robot() {
         this.driver = new Driver();
         this.notifications = new Notifications(15, 6);
-        this.lineFollowing = new LineFollowing(this.driver);
-        this.remoteControl = new RemoteControl(this.driver);
+        this.lineFollowing = new LineFollowing(this.driver, this);
+        //this.remoteControl = new RemoteControl(this.driver);
         this.lineSensorControl = new LineSensorControl(this);
         this.routeInstructions = new ArrayList<>();
 
@@ -35,7 +35,7 @@ public class Robot implements LineSensorCallback, UltrasoneSensorCallback, Bluet
     }
 
     public void lineSensorDetect(ArrayList<Boolean> linesDetected) {
-        //System.out.println(linesDetected);
+        System.out.println(linesDetected);
         if (!linesDetected.get(0) && linesDetected.get(1) && !linesDetected.get(2)) { //straight forward
             this.driver.goToSpeed(1550);
         } else if (linesDetected.get(0) && !linesDetected.get(1) && !linesDetected.get(2)) { //turn to the left
@@ -46,7 +46,7 @@ public class Robot implements LineSensorCallback, UltrasoneSensorCallback, Bluet
             this.driver.goToSpeed(1450);
         } else if (linesDetected.get(0) && linesDetected.get(1) && linesDetected.get(2) && this.driver.getLeft().getSpeed() <= 1500) {
             this.driver.emergencyBreak();
-
+            this.lineFollowing.dataToAction();
         }
     }
 
@@ -54,11 +54,8 @@ public class Robot implements LineSensorCallback, UltrasoneSensorCallback, Bluet
         if (this.lineFollowing.getCurrentAction().isEmpty()) {
             return;
         }
-
         if (this.lineFollowing.getTimer().timeout() && this.lineSensorControl.getState() == true) {                     //When an action is present but the linefollowers are still on
-
             this.lineSensorControl.setState(false);                                                                     //Turn off the linesensors
-
             if (this.lineFollowing.getCurrentAction().equals("R")) {                                                    //Do whatever action is necessary
                 this.driver.turn("Right");
             } else if (this.lineFollowing.getCurrentAction().equals("L")) {

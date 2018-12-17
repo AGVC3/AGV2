@@ -1,5 +1,7 @@
 import TI.Timer;
 
+
+import javax.security.auth.callback.Callback;
 import java.util.ArrayList;
 
 public class LineFollowing implements Updatable{
@@ -9,16 +11,18 @@ public class LineFollowing implements Updatable{
     private String currentAction;
     private boolean isActive;
     private Timer timer;
+    private LineFollowingCallback callback;
 
-    public LineFollowing(Driver driver) {
+    public LineFollowing(Driver driver, LineFollowingCallback callback) {
         this.driver = driver;
         this.currentAction = "";
         this.timer = new Timer(300);
+        this.callback = callback;
         this.instructions = new ArrayList<>();
-        this.instructions.add("R");
+        this.instructions.add("D");
         this.instructions.add("L");
         this.instructions.add("F");
-        this.instructions.add("D");
+        this.instructions.add("R");
     }
 
     public void dataToAction(){
@@ -28,6 +32,7 @@ public class LineFollowing implements Updatable{
 
     @Override
     public void update() {
+        this.callback.lineFollowingLogic();
     }
 
     public String getCurrentAction() {
