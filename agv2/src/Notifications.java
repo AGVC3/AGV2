@@ -1,3 +1,5 @@
+package com.alg;
+
 import TI.BoeBot;
 
 public class Notifications {
