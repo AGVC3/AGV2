@@ -11,7 +11,7 @@ public class RemoteControl {
     public void dataToAction(char character) {
         switch (character) {
             case 'w':
-                this.driver.goToSpeed(1550);
+                this.driver.goToSpeed(1700);
                 break;
             case 's':
                 this.driver.goToSpeed(1450);
@@ -29,7 +29,7 @@ public class RemoteControl {
                 this.driver.emergencyBreak();
                 break;
             case 'h':
-                this.lineSensorControl.setState(!this.lineSensorControl.getState());
+                this.lineSensorControl.setOverride(!this.lineSensorControl.isOverride());
             default:
                 break;
         }
