@@ -3,17 +3,16 @@ public class Notifications {
     private LED led;
     private Speaker speaker;
 
-    public Notifications(int pinLed, int pinSpeaker) {
-        this.led = new LED(pinLed);
+    public Notifications(int pinSpeaker) {
         this.speaker = new Speaker(pinSpeaker);
     }
 
     public void ledOn() {
-        this.led.ledOn();
+        this.led.setAllLedPinsColorRed();
     }
 
     public void ledOff() {
-        this.led.ledOff();
+        this.led.pinsAllOff();
     }
 
     public void truckHorn() {
