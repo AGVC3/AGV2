@@ -1,3 +1,5 @@
+import TI.BoeBot;
+
 import java.util.ArrayList;
 
 public class Robot implements LineSensorCallback, UltrasoneSensorCallback, BluetoothModuleCallback, LineFollowingCallback {
@@ -15,7 +17,7 @@ public class Robot implements LineSensorCallback, UltrasoneSensorCallback, Bluet
         this.notifications = new Notifications(15, 6);
         this.lineFollowing = new LineFollowing(this.driver, this);
         this.lineSensorControl = new LineSensorControl(this);
-        this.remoteControl = new RemoteControl(this.driver, lineSensorControl);
+        this.remoteControl = new RemoteControl(this.driver);
         this.routeInstructions = new ArrayList<>();
 
         this.updatables = new ArrayList<>();
@@ -34,7 +36,7 @@ public class Robot implements LineSensorCallback, UltrasoneSensorCallback, Bluet
     }
 
     public void lineSensorDetect(ArrayList<Boolean> linesDetected) {
-        System.out.println(linesDetected);
+        //System.out.println(linesDetected);
         if (!linesDetected.get(0) && linesDetected.get(1) && !linesDetected.get(2)) { //straight forward
             this.driver.goToSpeed(1550);
         } else if (linesDetected.get(0) && !linesDetected.get(1) && !linesDetected.get(2)) { //turn to the left
