@@ -15,19 +15,25 @@ public class LineSensor implements Updatable {
     public void update() {
         ArrayList<Boolean> linesDetected = new ArrayList<>();
 
-        if (BoeBot.analogRead(0) > 1000) {
+        if (BoeBot.analogRead(2) > 1500) {
+            //System.out.println(BoeBot.analogRead(0));
             linesDetected.add(true);
         } else {
+            //System.out.println(BoeBot.analogRead(0));
             linesDetected.add(false);
         }
-        if (BoeBot.analogRead(1) > 1000) {
+        if (BoeBot.analogRead(1) > 1500) {
+            //System.out.println(BoeBot.analogRead(1));
             linesDetected.add(true);
         } else {
+            //System.out.println(BoeBot.analogRead(1));
             linesDetected.add(false);
         }
-        if (BoeBot.analogRead(2) > 1000) {
+        if (BoeBot.analogRead(0) > 1500) {
+            //System.out.println(BoeBot.analogRead(2));
             linesDetected.add(true);
         } else {
+            //System.out.println(BoeBot.analogRead(2));
             linesDetected.add(false);
         }
 

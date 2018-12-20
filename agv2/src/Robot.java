@@ -1,5 +1,3 @@
-import TI.BoeBot;
-
 import java.util.ArrayList;
 
 public class Robot implements LineSensorCallback, UltrasoneSensorCallback, BluetoothModuleCallback {
@@ -14,7 +12,7 @@ public class Robot implements LineSensorCallback, UltrasoneSensorCallback, Bluet
     public Robot() {
         this.driver = new Driver();
         this.notifications = new Notifications(15, 6);
-        //this.lineFollowing = new LineFollowing(this.driver);
+        this.lineFollowing = new LineFollowing(this.driver);
         this.remoteControl = new RemoteControl(this.driver);
         this.routeInstructions = new ArrayList<>();
 
@@ -33,7 +31,7 @@ public class Robot implements LineSensorCallback, UltrasoneSensorCallback, Bluet
     }
 
     public void lineSensorDetect(ArrayList<Boolean> linesDetected) {
-        //System.out.println(linesDetected);
+        System.out.println(linesDetected);
         if (!linesDetected.get(0) && linesDetected.get(1) && !linesDetected.get(2)) { //straight forward
             this.driver.goToSpeed(1550);
 //            this.lineFollowing.straightForward();
@@ -53,16 +51,15 @@ public class Robot implements LineSensorCallback, UltrasoneSensorCallback, Bluet
     }
 
     public void ultrasoneDetect(int pulse) {
-
         if (pulse > 17 && pulse < 300) {
             this.driver.goToSpeed(1490);
 
-            System.out.println(pulse);
+            //System.out.println(pulse);
 
             this.notifications.noiseDrivingBackwards();
         } else if (pulse > 300 && pulse < 1000) {
             this.driver.goToSpeed(1490);
-            System.out.println(pulse);
+            //System.out.println(pulse);
 
             this.notifications.ledOn();
             this.notifications.truckHorn();
