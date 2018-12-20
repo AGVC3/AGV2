@@ -1,16 +1,15 @@
 import TI.BoeBot;
-
 import java.util.ArrayList;
 
-public class LineSensor implements Updatable {
 
-    private LineSensorCallback callback;
-    private boolean state;
+public class LineSensor{
 
-    public LineSensor(LineSensorCallback callback) {
-        this.callback = callback;
-        this.state = true;
+    private int pin;
+
+    public LineSensor (int pin) {
+        this.pin = pin;
     }
+
 
     public void update() {
         ArrayList<Boolean> linesDetected = new ArrayList<>();
@@ -39,15 +38,13 @@ public class LineSensor implements Updatable {
 
         if (state) {
             this.callback.lineSensorDetect(linesDetected);
+        }}
+
+    public boolean isState() {
+        if (BoeBot.analogRead(pin) > 1500) {
+            return true;
+        } else {
+            return false;
         }
     }
-
-    public boolean getState() {
-        return state;
-    }
-
-    public void setState(boolean state) {
-        this.state = state;
-    }
-
 }

@@ -1,15 +1,17 @@
 public class RemoteControl {
 
     private Driver driver;
+    private LineSensorControl lineSensorControl;
 
-    public RemoteControl(Driver driver) {
+    public RemoteControl(Driver driver, LineSensorControl lineSensorControl) {
         this.driver = driver;
+        this.lineSensorControl = lineSensorControl;
     }
 
     public void dataToAction(char character) {
         switch (character) {
             case 'w':
-                this.driver.goToSpeed(1550);
+                this.driver.goToSpeed(1700);
                 break;
             case 's':
                 this.driver.goToSpeed(1450);
@@ -26,10 +28,10 @@ public class RemoteControl {
             case 'g':
                 this.driver.emergencyBreak();
                 break;
+            case 'h':
+                this.lineSensorControl.setOverride(!this.lineSensorControl.isOverride());
             default:
                 break;
         }
     }
-
-
 }
