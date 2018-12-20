@@ -13,14 +13,9 @@ public class Robot implements LineSensorCallback, UltrasoneSensorCallback, Bluet
     public Robot() {
         this.driver = new Driver();
         this.notifications = new Notifications(15, 6);
-<<<<<<< HEAD
-        this.lineFollowing = new LineFollowing(this.driver);
-        this.remoteControl = new RemoteControl(this.driver);
-=======
         this.lineFollowing = new LineFollowing(this.driver, this);
         this.lineSensorControl = new LineSensorControl(this);
         this.remoteControl = new RemoteControl(this.driver, lineSensorControl);
->>>>>>> 69b48afb423f23baf4b5f2c0d4214971fb5f13af
         this.routeInstructions = new ArrayList<>();
 
         this.updatables = new ArrayList<>();
@@ -55,18 +50,6 @@ public class Robot implements LineSensorCallback, UltrasoneSensorCallback, Bluet
         }
     }
 
-<<<<<<< HEAD
-    public void ultrasoneDetect(int pulse) {
-        if (pulse > 17 && pulse < 300) {
-            this.driver.goToSpeed(1490);
-
-            //System.out.println(pulse);
-
-            this.notifications.noiseDrivingBackwards();
-        } else if (pulse > 300 && pulse < 1000) {
-            this.driver.goToSpeed(1490);
-            //System.out.println(pulse);
-=======
     public void lineFollowingLogic() {
         if (this.lineFollowing.getCurrentAction().equals("")) {
             return;
@@ -100,7 +83,6 @@ public class Robot implements LineSensorCallback, UltrasoneSensorCallback, Bluet
             this.driver.goToSpeed(1450);
             System.out.println(pulse);
         } else if (pulse >= 500 && pulse < 1000) {
->>>>>>> 69b48afb423f23baf4b5f2c0d4214971fb5f13af
 
             if (this.driver.getSpeed() >= 1500) {
                 this.driver.goToSpeed(1500);
