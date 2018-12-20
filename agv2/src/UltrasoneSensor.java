@@ -9,11 +9,11 @@ public class UltrasoneSensor implements Updatable {
     }
 
     public void update() {
-        BoeBot.digitalWrite(10, true);
+        BoeBot.digitalWrite(2, true);
         BoeBot.wait(0,500);
-        BoeBot.digitalWrite(10, false);
+        BoeBot.digitalWrite(2, false);
 
-        int pulse = BoeBot.pulseIn(11, true, 10000);
+        int pulse = BoeBot.pulseIn(3, true, 10000);
         this.callback.ultrasoneDetect(pulse);
     }
 }
