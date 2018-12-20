@@ -71,8 +71,4 @@ public class Driver {
     public int getSpeed() {
         return this.left.getSpeed();
     }
-
-    public int getTargetSpeed() {
-        return this.left.getTargetSpeed();
-    }
 }
