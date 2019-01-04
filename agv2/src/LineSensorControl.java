@@ -36,7 +36,6 @@ public class LineSensorControl implements Updatable {
         if (timerLine.timeout()) {
             this.state = true;
         }
-
     }
 
     public boolean getState() {
