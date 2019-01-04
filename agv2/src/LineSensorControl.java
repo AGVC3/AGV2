@@ -15,9 +15,9 @@ public class LineSensorControl implements Updatable {
     private LineSensorCallback callback;
 
     public LineSensorControl(LineSensorCallback callback) {
-        this.leftSensor = new LineSensor(2);
+        this.leftSensor = new LineSensor(0);
         this.middleSensor = new LineSensor(1);
-        this.rightSensor = new LineSensor(0);
+        this.rightSensor = new LineSensor(2);
         this.callback = callback;
         this.state = true;
         this.override = false;

@@ -4,19 +4,11 @@ public class LED {
 
     private int pin;
 
-    public LED(int pin) {
+    public LED (int pin) {
         this.pin = pin;
     }
 
-    public int getPin() {
-        return this.pin;
-    }
-
-    public void ledOn() {
-        BoeBot.digitalWrite(this.pin, false);
-    }
-
-    public void ledOff() {
-        BoeBot.digitalWrite(this.pin, true);
+    public void updateColor(int r, int g, int b) {
+        BoeBot.rgbSet(pin, r, g, b);
     }
 }

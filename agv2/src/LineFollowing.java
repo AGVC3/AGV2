@@ -22,8 +22,6 @@ public class LineFollowing implements Updatable {
         this.instructions.add("D");
         this.instructions.add("R");
         this.instructions.add("F");
-
-
     }
 
     public void dataToAction() {

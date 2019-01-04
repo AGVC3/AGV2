@@ -1,19 +1,19 @@
-public class Notifications {
+public class Notifications{
 
-    private LED led;
+    private LEDControl ledControl;
     private Speaker speaker;
 
-    public Notifications(int pinLed, int pinSpeaker) {
-        this.led = new LED(pinLed);
+    public Notifications(int pinSpeaker) {
         this.speaker = new Speaker(pinSpeaker);
+        this.ledControl = new LEDControl();
     }
 
-    public void ledOn() {
-        this.led.ledOn();
+    public void ledOn(String color) {
+        this.ledControl.setAllLedPinsColor(color);
     }
 
     public void ledOff() {
-        this.led.ledOff();
+        this.ledControl.pinsAllOff();
     }
 
     public void truckHorn() {
@@ -22,5 +22,9 @@ public class Notifications {
 
     public void noiseDrivingBackwards() {
 
+    }
+
+    public LEDControl getLedControl() {
+        return ledControl;
     }
 }

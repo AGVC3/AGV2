@@ -14,19 +14,20 @@ public class Robot implements LineSensorCallback, UltrasoneSensorCallback, Bluet
 
     public Robot() {
         this.driver = new Driver();
-        this.notifications = new Notifications(15, 6);
+        this.notifications = new Notifications(15);
         this.lineFollowing = new LineFollowing(this.driver, this);
         this.lineSensorControl = new LineSensorControl(this);
         this.remoteControl = new RemoteControl(this.driver);
         this.routeInstructions = new ArrayList<>();
 
         this.updatables = new ArrayList<>();
-        this.updatables.add(lineFollowing);
+        //this.updatables.add(lineFollowing);
         this.updatables.add(lineSensorControl);
-        this.updatables.add(new UltrasoneSensor(this));
-        this.updatables.add(new BluetoothModule(this));
+        //this.updatables.add(new UltrasoneSensor(this));
+        //this.updatables.add(new BluetoothModule(this));
         this.updatables.add(this.driver.getLeft());
         this.updatables.add(this.driver.getRight());
+     //   this.updatables.add(this.notifications.getLedControl());
     }
 
     public void updateAll() {
@@ -36,9 +37,9 @@ public class Robot implements LineSensorCallback, UltrasoneSensorCallback, Bluet
     }
 
     public void lineSensorDetect(ArrayList<Boolean> linesDetected) {
-        //System.out.println(linesDetected);
+        System.out.println(linesDetected);
         if (!linesDetected.get(0) && linesDetected.get(1) && !linesDetected.get(2)) { //straight forward
-            this.driver.goToSpeed(1550);
+            this.driver.goToSpeed(1550); //1550
         } else if (linesDetected.get(0) && !linesDetected.get(1) && !linesDetected.get(2)) { //turn to the left
             this.driver.turnWhileDriving("Right");
         } else if (!linesDetected.get(0) && !linesDetected.get(1) && linesDetected.get(2)) { //turn to the right
@@ -81,15 +82,19 @@ public class Robot implements LineSensorCallback, UltrasoneSensorCallback, Bluet
 
         if (pulse > 17 && pulse < 100) {
             this.driver.emergencyBreak();
+            this.notifications.ledOn("Red");
         } else if (pulse >= 100 && pulse < 500) {
             this.driver.goToSpeed(1450);
             System.out.println(pulse);
+            this.notifications.ledOn("Red");
         } else if (pulse >= 500 && pulse < 1000) {
-
+            this.notifications.ledOff();
             if (this.driver.getSpeed() >= 1500) {
                 this.driver.goToSpeed(1500);
                 System.out.println(pulse);
             }
+        } else if (pulse >= 1000) {
+            this.notifications.ledOn("Blue");
         }
     }
 
