@@ -82,15 +82,15 @@ public class LineSensorControl implements Updatable {
     }
 
     public Timer getTimerLine() {
-        return timerLine;
+        return this.timerLine;
     }
 
     public Timer getTimerStop() {
-        return timerStop;
+        return this.timerStop;
     }
 
     public Timer getTimerStop2() {
-        return timerStop2;
+        return this.timerStop2;
     }
 
     public void setStop2(boolean stop2) {

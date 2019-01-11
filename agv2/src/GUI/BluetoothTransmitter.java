@@ -16,7 +16,7 @@ public class BluetoothTransmitter {
         try {
             this.serialPort.openPort();
             this.serialPort.setParams(115200, 8, 1, 0);
-            this.serialPort.writeBytes(route.toLowerCase().getBytes());
+            this.serialPort.writeBytes(this.route.toLowerCase().getBytes());
             this.serialPort.closePort();
         } catch (Exception e) {
             System.out.println(e);
@@ -39,6 +39,6 @@ public class BluetoothTransmitter {
     }
 
     public String getRoute() {
-        return route;
+        return this.route;
     }
 }

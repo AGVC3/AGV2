@@ -36,17 +36,17 @@ public class Route {
             tempRoute += routeChar[i];
         }
         this.routeArray = tempRoute;
-        System.out.println(routeArray);
+        System.out.println(this.routeArray);
 
 
     }
 
     public String getName() {
-        return name.get();
+        return this.name.get();
     }
 
     public SimpleStringProperty nameProperty() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
@@ -54,11 +54,11 @@ public class Route {
     }
 
     public String getRouteArray() {
-        return routeArray;
+        return this.routeArray;
     }
 
 //    public SimpleObjectProperty<ArrayList<String>> routeArrayProperty() {
-//        return routeArray;
+//        return this.routeArray;
 //    }
 
 //    public void setRouteArray(ArrayList<String> routeArray) {
@@ -66,11 +66,11 @@ public class Route {
 //    }
 
     public String getRouteString() {
-        return routeString.get();
+        return this.routeString.get();
     }
 
     public SimpleStringProperty routeStringProperty() {
-        return routeString;
+        return this.routeString;
     }
 
     public void setRouteString(String routeString) {

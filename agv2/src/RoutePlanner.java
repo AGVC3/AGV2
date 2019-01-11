@@ -22,9 +22,9 @@ public class RoutePlanner implements Updatable {
         try {
             this.currentAction = this.instructions.get(this.instructions.size() - 1);
             this.instructions.remove(this.instructions.size() - 1);
-            System.out.println("current action: " + currentAction);
+            System.out.println("current action: " + this.currentAction);
         } catch (Exception e) {
-            //System.out.println("Exception");
+            //System.out.println(e);
         }
     }
 
@@ -60,7 +60,7 @@ public class RoutePlanner implements Updatable {
     }
 
     public String getCurrentAction() {
-        return currentAction;
+        return this.currentAction;
     }
 
     public void setCurrentAction(String currentAction) {
@@ -68,15 +68,15 @@ public class RoutePlanner implements Updatable {
     }
 
     public boolean isActive() {
-        return isActive;
+        return this.isActive;
     }
 
     public void setActive(boolean active) {
-        isActive = active;
+        this.isActive = active;
     }
 
     public Timer getTimer() {
-        return timer;
+        return this.timer;
     }
 
     public void setTimer(Timer timer) {
