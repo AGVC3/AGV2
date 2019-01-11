@@ -1,4 +1,5 @@
 import TI.BoeBot;
+import TI.Timer;
 
 import java.util.ArrayList;
 
@@ -6,6 +7,7 @@ import java.util.ArrayList;
 public class LEDControl implements Updatable {
 
     private ArrayList<LED> leds;
+    private Timer timer;
 
     public LEDControl () { // initializes the LED (value of pin must be between 0-5)
         this.leds = new ArrayList<>();
@@ -15,12 +17,15 @@ public class LEDControl implements Updatable {
         this.leds.add(new LED(3));
         this.leds.add(new LED(4));
         this.leds.add(new LED(5));
+        this.timer = new Timer(100);
 
     }
 
     @Override
     public void update() {
-        BoeBot.rgbShow();
+        if (timer.timeout()) {
+            BoeBot.rgbShow();
+        }
     }
 
     public void setAllLedPinsColor(String color) {
@@ -40,6 +45,14 @@ public class LEDControl implements Updatable {
                     led.updateColor(0,0,10);
                 }
                 break;
+            case "Yellow":
+                for (LED led : this.leds) {
+                    led.updateColor(50,10,0);
+                }
+            case "Purple":
+                for (LED led : this.leds) {
+                    led.updateColor(50,0,10);
+                }
         }
     }
 

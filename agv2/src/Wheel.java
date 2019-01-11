@@ -1,4 +1,5 @@
 import TI.Servo;
+import TI.Timer;
 
 public class Wheel implements Updatable {
 
@@ -6,27 +7,36 @@ public class Wheel implements Updatable {
     private int targetSpeed;
     private String direction;
     private Servo wheel;
+    private Timer timer;
 
-    public Wheel (int pin, String direction) {
+    public Wheel(int pin, String direction) {
         this.wheel = new Servo(pin);
         this.speed = 1500;
         this.targetSpeed = 1500;
         this.direction = direction;
+        this.timer = new Timer(5);
     }
 
     @Override
     public void update() {
-        if (this.speed != this.targetSpeed) {
-            if (this.speed < this.targetSpeed) {
-                this.speed += 5;
-            } else {
-                this.speed -= 5;
+        if (timer.timeout()) {
+            int accelaration = 10;
+            if (this.speed != this.targetSpeed) {
+                if ((Math.abs(this.speed - this.targetSpeed) > accelaration)) {
+                    if (this.speed < this.targetSpeed) {
+                        this.speed += accelaration;
+                    } else {
+                        this.speed -= accelaration;
+                    }
+                } else {
+                    this.speed = this.targetSpeed;
+                }
             }
-        }
-        if (this.direction.equals("Left")) {
-            this.wheel.update(this.speed);
-        } else {
-            this.wheel.update(3000 - this.speed);
+            if (this.direction.equals("Left")) {
+                this.wheel.update(this.speed);
+            } else {
+                this.wheel.update(3000 - this.speed);
+            }
         }
     }
 
@@ -38,7 +48,7 @@ public class Wheel implements Updatable {
         return this.targetSpeed;
     }
 
-    public void emergencyBreak (){
+    public void emergencyBreak() {
         this.targetSpeed = 1500;
         this.speed = 1500;
     }

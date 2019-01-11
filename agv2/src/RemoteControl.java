@@ -2,10 +2,12 @@ public class RemoteControl {
 
     private Driver driver;
     private LineSensorControl lineSensorControl;
+    private Notifications notifications;
 
-    public RemoteControl(Driver driver, LineSensorControl lineSensorControl) {
+    public RemoteControl(Driver driver, LineSensorControl lineSensorControl, Notifications notifications) {
         this.driver = driver;
         this.lineSensorControl = lineSensorControl;
+        this.notifications = notifications;
     }
 
     public void dataToAction(String string) {
@@ -27,9 +29,12 @@ public class RemoteControl {
                 break;
             case "000010010101"://POWER
                 this.driver.emergencyBreak();
+                this.notifications.ledOn("Purple");
                 break;
-            case "temp":
+            case "000010000000": //Number 1
                 this.lineSensorControl.setOverride(!this.lineSensorControl.isOverride());
+                this.notifications.ledOn("Yellow");
+                break;
             default:
                 break;
         }

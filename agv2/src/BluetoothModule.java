@@ -10,7 +10,7 @@ public class BluetoothModule implements Updatable {
     public BluetoothModule(BluetoothModuleCallback callback) {
         this.conn = new SerialConnection(115200);
         this.callback = callback;
-        this.timer = new Timer(10);
+        this.timer = new Timer(20);
     }
 
     public void update() {

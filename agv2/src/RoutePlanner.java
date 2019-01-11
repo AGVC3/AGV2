@@ -15,7 +15,7 @@ public class RoutePlanner implements Updatable {
     public RoutePlanner(Driver driver, RoutePlannerCallback callback) {
         this.driver = driver;
         this.currentAction = "";
-        this.timer = new Timer(1000);
+        this.timer = new Timer(250);
         this.callback = callback;
         this.instructions = new ArrayList<>();
     }
@@ -35,8 +35,8 @@ public class RoutePlanner implements Updatable {
             case 'f':
                 this.instructions.add("F");
                 break;
-            case 't':
-                this.instructions.add("T");
+            case 's':
+                this.instructions.add("S");
                 break;
             case 'l':
                 this.instructions.add("L");
@@ -56,7 +56,9 @@ public class RoutePlanner implements Updatable {
 
     @Override
     public void update() {
-        this.callback.routePlannerLogic();
+        if (this.timer.timeout()) {
+            this.callback.routePlannerLogic();
+        }
     }
 
     public String getCurrentAction() {
