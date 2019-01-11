@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class LineSensorControl implements Updatable {
 
-    Timer timer = new Timer(50);
+    Timer timer = new Timer(5);
     Timer timerLine = new Timer(600);
     private boolean state;
     private boolean override;
@@ -36,7 +36,6 @@ public class LineSensorControl implements Updatable {
         if (timerLine.timeout()) {
             this.state = true;
         }
-
     }
 
     public boolean getState() {

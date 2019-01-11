@@ -1,29 +1,24 @@
 import TI.Timer;
 
 
-import javax.security.auth.callback.Callback;
 import java.util.ArrayList;
 
-public class LineFollowing implements Updatable {
+public class RoutePlanner implements Updatable {
 
     private Driver driver;
     private ArrayList<String> instructions;
     private String currentAction;
     private boolean isActive;
     private Timer timer;
-    private LineFollowingCallback callback;
+    private RoutePlannerCallback callback;
 
-    public LineFollowing(Driver driver, LineFollowingCallback callback) {
+    public RoutePlanner(Driver driver, RoutePlannerCallback callback) {
         this.driver = driver;
         this.currentAction = "";
         this.timer = new Timer(1000);
         this.callback = callback;
         this.instructions = new ArrayList<>();
         this.instructions.add("D");
-        this.instructions.add("R");
-        this.instructions.add("F");
-
-
     }
 
     public void dataToAction() {
@@ -34,12 +29,35 @@ public class LineFollowing implements Updatable {
         } catch (Exception e) {
             //System.out.println("Exception");
         }
+    }
 
+    public void dataToInstruction(char character) {
+        switch (character) {
+            case 'f':
+                this.instructions.add("F");
+                break;
+            case 't':
+                this.instructions.add("T");
+                break;
+            case 'l':
+                this.instructions.add("L");
+                break;
+            case 'd':
+                this.instructions.add("D");
+                break;
+            case 'r':
+                this.instructions.add("R");
+                break;
+            case 'e':
+                this.driver.emergencyBreak();
+            default:
+                break;
+        }
     }
 
     @Override
     public void update() {
-        this.callback.lineFollowingLogic();
+        this.callback.routePlannerLogic();
     }
 
     public String getCurrentAction() {

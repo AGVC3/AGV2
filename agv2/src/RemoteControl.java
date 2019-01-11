@@ -8,30 +8,32 @@ public class RemoteControl {
         this.lineSensorControl = lineSensorControl;
     }
 
-    public void dataToAction(char character) {
-        switch (character) {
-            case 'w':
-                this.driver.goToSpeed(1700);
+    public void dataToAction(String string) {
+        switch (string) {
+            case "000010010000"://UP
+                this.driver.goToSpeed(1550);
                 break;
-            case 's':
+            case "000010010001"://DOWN
                 this.driver.goToSpeed(1450);
                 break;
-            case 'a':
+            case "000010010011"://LEFT
                 this.driver.turn("Left");
                 break;
-            case 'd':
+            case "000010010010"://RIGHT
                 this.driver.turn("Right");
                 break;
-            case 'f':
+            case "000010010100"://MUTE
                 this.driver.goToSpeed(1500);
                 break;
-            case 'g':
+            case "000010010101"://POWER
                 this.driver.emergencyBreak();
                 break;
-            case 'h':
+            case "temp":
                 this.lineSensorControl.setOverride(!this.lineSensorControl.isOverride());
             default:
                 break;
         }
     }
+
+
 }

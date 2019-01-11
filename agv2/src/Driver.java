@@ -25,11 +25,11 @@ public class Driver {
 
     public void turnWhileDriving(String turnDirection) {
         if (turnDirection.equals("Left")) {
-            this.left.setTargetSpeed(1620);
-            this.right.setTargetSpeed(1520);
+            this.left.setTargetSpeed(1620); //1620
+            this.right.setTargetSpeed(1520); //1520
         } else if (turnDirection.equals("Right")) {
-            this.right.setTargetSpeed(1620);
-            this.left.setTargetSpeed(1520);
+            this.right.setTargetSpeed(1620); //1620
+            this.left.setTargetSpeed(1520); //1520
         }
     }
 
@@ -70,9 +70,5 @@ public class Driver {
 
     public int getSpeed() {
         return this.left.getSpeed();
-    }
-
-    public int getTargetSpeed() {
-        return this.left.getTargetSpeed();
     }
 }

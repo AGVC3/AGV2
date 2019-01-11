@@ -1,4 +1,7 @@
 import TI.BoeBot;
+import TI.SerialConnection;
+import TI.Servo;
+import jssc.SerialPort;
 
 public class Main {
 

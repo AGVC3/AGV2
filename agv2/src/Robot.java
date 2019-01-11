@@ -2,31 +2,31 @@ import TI.BoeBot;
 
 import java.util.ArrayList;
 
-public class Robot implements LineSensorCallback, UltrasoneSensorCallback, BluetoothModuleCallback, LineFollowingCallback {
+public class Robot implements LineSensorCallback, UltrasoneSensorCallback, BluetoothModuleCallback, RoutePlannerCallback, InfraredModuleCallback {
 
     private ArrayList<Updatable> updatables;
-    private ArrayList<String> routeInstructions;
     private Driver driver;
     private Notifications notifications;
-    private LineFollowing lineFollowing;
+    private RoutePlanner routePlanner;
     private RemoteControl remoteControl;
     private LineSensorControl lineSensorControl;
 
     public Robot() {
         this.driver = new Driver();
-        this.notifications = new Notifications(15, 6);
-        this.lineFollowing = new LineFollowing(this.driver, this);
+        this.notifications = new Notifications(15);
+        this.routePlanner = new RoutePlanner(this.driver, this);
         this.lineSensorControl = new LineSensorControl(this);
-        this.remoteControl = new RemoteControl(this.driver, lineSensorControl);
-        this.routeInstructions = new ArrayList<>();
+        this.remoteControl = new RemoteControl(this.driver, this.lineSensorControl);
 
         this.updatables = new ArrayList<>();
-        this.updatables.add(lineFollowing);
+        this.updatables.add(routePlanner);
         this.updatables.add(lineSensorControl);
         this.updatables.add(new UltrasoneSensor(this));
         this.updatables.add(new BluetoothModule(this));
+        this.updatables.add(new InfraredModule(this));
         this.updatables.add(this.driver.getLeft());
         this.updatables.add(this.driver.getRight());
+        this.updatables.add(this.notifications.getLedControl());
     }
 
     public void updateAll() {
@@ -36,42 +36,51 @@ public class Robot implements LineSensorCallback, UltrasoneSensorCallback, Bluet
     }
 
     public void lineSensorDetect(ArrayList<Boolean> linesDetected) {
-        //System.out.println(linesDetected);
+        System.out.println(linesDetected);
         if (!linesDetected.get(0) && linesDetected.get(1) && !linesDetected.get(2)) { //straight forward
-            this.driver.goToSpeed(1550);
+            this.driver.goToSpeed(1550); //1550
         } else if (linesDetected.get(0) && !linesDetected.get(1) && !linesDetected.get(2)) { //turn to the left
             this.driver.turnWhileDriving("Right");
         } else if (!linesDetected.get(0) && !linesDetected.get(1) && linesDetected.get(2)) { //turn to the right
             this.driver.turnWhileDriving("Left");
         } else if (linesDetected.get(0) && linesDetected.get(1) && linesDetected.get(2) && this.driver.getLeft().getSpeed() > 1500) { //crossroads logic
-            this.driver.goToSpeed(1500);
-        } else if (linesDetected.get(0) && linesDetected.get(1) && linesDetected.get(2) && this.driver.getLeft().getSpeed() <= 1500) {
-            this.driver.goToSpeed(1500);
+//            this.driver.goToSpeed(1500);
+            this.driver.emergencyBreak();
             this.lineSensorControl.setState(false);
-            this.lineFollowing.dataToAction();
+            this.routePlanner.dataToAction();
+        } else if (linesDetected.get(0) && linesDetected.get(1) && linesDetected.get(2) && this.driver.getLeft().getSpeed() <= 1500) {
+//            this.driver.goToSpeed(1500);
+//            this.lineSensorControl.setState(false);
+//            this.routePlanner.dataToAction();
         }
     }
 
-    public void lineFollowingLogic() {
-        if (this.lineFollowing.getCurrentAction().equals("")) {
+    public void routePlannerLogic() {
+        if (this.routePlanner.getCurrentAction().equals("")) {
             return;
         }
 
         if (!this.lineSensorControl.getState()) {                                                                       //When an action is present but the linefollowers are still on
 
-            if (this.lineFollowing.getCurrentAction().equals("R")) {                                                    //Do whatever action is necessary
+            if (this.routePlanner.getCurrentAction().equals("R")) {                                                    //Do whatever action is necessary
 
                 this.driver.turn("Right");
 
-            } else if (this.lineFollowing.getCurrentAction().equals("L")) {
+            } else if (this.routePlanner.getCurrentAction().equals("L")) {
 
                 this.driver.turn("Left");
 
-            } else if (this.lineFollowing.getCurrentAction().equals("F")) {
+            } else if (this.routePlanner.getCurrentAction().equals("F")) {
 
                 this.driver.goToSpeed(1550);
 
-            } else if (this.lineFollowing.getCurrentAction().equals("D")) {
+            } else if (this.routePlanner.getCurrentAction().equals("T")) {
+
+                this.notifications.ledOn("Green");
+                BoeBot.wait(5000);
+                this.notifications.ledOff();
+
+            } else if (this.routePlanner.getCurrentAction().equals("D")) {
 
             }
         }
@@ -81,20 +90,29 @@ public class Robot implements LineSensorCallback, UltrasoneSensorCallback, Bluet
 
         if (pulse > 17 && pulse < 100) {
             this.driver.emergencyBreak();
+            this.notifications.ledOn("Red");
         } else if (pulse >= 100 && pulse < 500) {
             this.driver.goToSpeed(1450);
             System.out.println(pulse);
+            this.notifications.ledOn("Red");
         } else if (pulse >= 500 && pulse < 1000) {
-
+            this.notifications.ledOn("Green");
             if (this.driver.getSpeed() >= 1500) {
                 this.driver.goToSpeed(1500);
                 System.out.println(pulse);
             }
+        } else if (pulse >= 1000) {
+            this.notifications.ledOn("Blue");
         }
     }
 
     public void bluetoothDetect(char character) {
         System.out.println(character);
-        this.remoteControl.dataToAction(character);
+        this.routePlanner.dataToInstruction(character);
+    }
+
+    public void infraredDetect(String binary) {
+        //System.out.println(binary);
+        this.remoteControl.dataToAction(binary);
     }
 }
