@@ -18,6 +18,7 @@ public class RoutePlanner implements Updatable {
         this.timer = new Timer(1000);
         this.callback = callback;
         this.instructions = new ArrayList<>();
+        this.instructions.add("D");
     }
 
     public void dataToAction() {

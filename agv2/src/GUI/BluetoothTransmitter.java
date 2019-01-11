@@ -1,33 +1,54 @@
 package GUI;
+
+import TI.BoeBot;
 import jssc.SerialPort;
 import jssc.SerialPortException;
 
 public class BluetoothTransmitter {
 
     private SerialPort serialPort;
+    private String route;
 
-    public BluetoothTransmitter(){
+    public BluetoothTransmitter() {
         this.serialPort = new SerialPort("COM5");
+        this.route = "";
     }
 
     public void transmitRoute() {
         try {
             serialPort.openPort();
 
-            serialPort.setParams(115200,8,1,0);
+            serialPort.setParams(115200, 8, 1, 0);
 
-            serialPort.writeInt(7);
-            System.out.println("hoi");
-//
-//            byte[] buffer = serialPort.readBytes(10);
-//            for (int i = 0; i < 10; i++) {
-//                System.out.println(buffer[i] + "-");
-//            }
+            serialPort.writeBytes(route.toLowerCase().getBytes());
 
             serialPort.closePort();
 
-        } catch (SerialPortException ex) {
+        } catch (Exception ex) {
             System.out.println(ex);
         }
+    }
+
+    public void transmitEmergency() {
+        try {
+            serialPort.openPort();
+
+            serialPort.setParams(115200, 8, 1, 0);
+
+            serialPort.writeBytes("e".getBytes());
+
+            serialPort.closePort();
+
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+    }
+
+    public void setRoute(String route) {
+        this.route = route;
+    }
+
+    public String getRoute() {
+        return route;
     }
 }

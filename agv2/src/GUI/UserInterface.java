@@ -24,23 +24,24 @@ import java.util.List;
 
 public class UserInterface extends Application {
 
+    private BluetoothTransmitter bluetoothTransmitter;
     private ObservableList<Route> allRoutes = FXCollections.observableArrayList();
     private ObservableList<Route> allRoutesCoded = FXCollections.observableArrayList();
     private ArrayList<String> currentRouteUser;
     private ArrayList<String> currentRouteCode;
     private String routeNameCurrent;
-    private ArrayList<String> uploadedRoute;
+    private String uploadedRoute;
 
-    public UserInterface() {
+    public UserInterface () {
+        this.bluetoothTransmitter = new BluetoothTransmitter();
         this.currentRouteUser = new ArrayList<>();
-        this.currentRouteCode = new ArrayList<>();
+        this.currentRouteCode = new ArrayList<>(); //Wordt aangemaakt voor toevoegen
         this.routeNameCurrent = "";
-        this.uploadedRoute = new ArrayList<>();
+        this.uploadedRoute = "";
     }
 
     @Override
     public void start(Stage stage) {
-
         stage.setTitle("Boebot Groep C3");
 
         BorderPane borderPaneInfo = new BorderPane();
@@ -52,6 +53,8 @@ public class UserInterface extends Application {
         ComboBox routeCombo = new ComboBox();
         HBox allInfoTop = new HBox();
         VBox nameAndRoute = new VBox();
+        HBox selectRow = new HBox();
+        VBox bottomRow = new VBox();
 
         BorderPane borderPane = new BorderPane();
         borderPane.setPrefHeight(400);
@@ -87,6 +90,12 @@ public class UserInterface extends Application {
 
         TextField routeCurrentText = new TextField();
         routeCurrentText.setPrefWidth(450);
+
+        Button emergency = new Button("Emergency Break");
+        emergency.setFont(Font.font(font, FontWeight.BOLD, 16));
+        emergency.setTextFill(Color.DARKRED);
+        emergency.setMaxWidth(Double.MAX_VALUE);
+        emergency.setMaxHeight(Double.MAX_VALUE);
 
         Button left = new Button("<");
         left.setFont(Font.font(font, FontWeight.BOLD, size));
@@ -124,12 +133,13 @@ public class UserInterface extends Application {
 
 
         TableView routesTable = new TableView();
+        routesTable.setMaxHeight(200);
 
         routesTable.setEditable(true);
 
         TableColumn nameColumn = new TableColumn("Name");
         nameColumn.setPrefWidth(100);
-        nameColumn.setCellValueFactory(new PropertyValueFactory<Route, String>("name"));
+        nameColumn.setCellValueFactory( new PropertyValueFactory<Route, String>("name"));
 
         TableColumn directionsColumn = new TableColumn("Route");
         directionsColumn.setPrefWidth(500);
@@ -138,9 +148,8 @@ public class UserInterface extends Application {
         routesTable.getColumns().addAll(nameColumn, directionsColumn);
 
         addRoute.setOnAction(event -> {
-
             this.currentRouteCode.add("D");
-            allRoutes.add(new Route(nameField.getText(), this.routeNameCurrent));
+            allRoutes.add(new Route (nameField.getText(), this.routeNameCurrent));
             allRoutesCoded.add(new Route(nameField.getText(), this.currentRouteCode));
 
             routesTable.setItems(allRoutes);
@@ -154,6 +163,7 @@ public class UserInterface extends Application {
         });
 
         left.setOnAction(event -> {
+            this.uploadedRoute += "l";
             this.currentRouteUser.add("Left");
             this.routeNameCurrent += "Left" + ", ";
             this.currentRouteCode.add("L");
@@ -161,6 +171,7 @@ public class UserInterface extends Application {
         });
 
         right.setOnAction(event -> {
+            this.uploadedRoute += "r";
             this.currentRouteUser.add("Right");
             this.routeNameCurrent += "Right" + ", ";
             this.currentRouteCode.add("R");
@@ -168,6 +179,7 @@ public class UserInterface extends Application {
         });
 
         up.setOnAction(event -> {
+            this.uploadedRoute += "f";
             this.currentRouteUser.add("Forward");
             this.routeNameCurrent += "Forward" + ", ";
             this.currentRouteCode.add("F");
@@ -175,6 +187,7 @@ public class UserInterface extends Application {
         });
 
         destination.setOnAction(event -> {
+            this.uploadedRoute += "s";
             this.currentRouteUser.add("Stop");
             this.routeNameCurrent += "Stop" + ", ";
             this.currentRouteCode.add("S");
@@ -184,40 +197,54 @@ public class UserInterface extends Application {
         upload.setOnAction(event -> {
             for (Route element : allRoutesCoded) {
                 if (element.getName().equals(routeCombo.getValue())) {
-                    setUploadedRoute(element.getInvertedRoute());
+
+                    setUploadedRoute(element.getRouteArray());
                 }
             }
+            this.bluetoothTransmitter.setRoute(this.uploadedRoute);
+            this.bluetoothTransmitter.transmitRoute();
+        });
+
+        emergency.setOnAction(event -> {
+            this.bluetoothTransmitter.transmitEmergency();
         });
 
 
-        nameHbox.getChildren().addAll(name, nameField, routeCurrent, routeCurrentText);
-        infoVBox.getChildren().addAll(welcome, step1, step2, step3, emptyLabel);
+        nameHbox.getChildren().addAll(name,nameField, routeCurrent, routeCurrentText);
+        infoVBox.getChildren().addAll(welcome, step1,step2,step3,emptyLabel);
         selectHbox.getChildren().addAll(select, routeCombo);
 
         allInfoTop.getChildren().addAll(infoVBox, buttonGrid);
         nameAndRoute.getChildren().addAll(nameHbox, addRoute);
 
         nameHbox.setSpacing(7);
-        allInfoTop.setSpacing(70);
+        allInfoTop.setSpacing(100);
         nameAndRoute.setSpacing(5);
 
         borderPaneInfo.setCenter(allInfoTop);
         borderPaneInfo.setBottom(nameAndRoute);
 
-        allVbox.getChildren().addAll(borderPaneInfo, routesTable, selectHbox, upload);
+        bottomRow.getChildren().addAll(selectHbox, upload);
+        selectRow.getChildren().addAll(bottomRow, emergency);
+        selectRow.setSpacing(450);
+
+
+        allVbox.getChildren().addAll(borderPaneInfo,routesTable, selectRow);
         allVbox.setSpacing(10);
 
-        Scene scene = new Scene(allVbox, 900, 400);
+        Scene scene = new Scene(allVbox, 800, 430);
         stage.setScene(scene);
         stage.show();
 
     }
 
-    public ArrayList<String> getRoute() {
+    public String getRoute () {
         return this.uploadedRoute;
     }
 
-    public void setUploadedRoute(ArrayList<String> uploadedRoute) {
+    public void setUploadedRoute(String uploadedRoute) {
+
+        System.out.println(uploadedRoute);
         this.uploadedRoute = uploadedRoute;
     }
 }
