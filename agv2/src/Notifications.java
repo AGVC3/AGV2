@@ -16,14 +16,6 @@ public class Notifications{
         this.ledControl.pinsAllOff();
     }
 
-    public void truckHorn() {
-
-    }
-
-    public void noiseDrivingBackwards() {
-
-    }
-
     public LEDControl getLedControl() {
         return ledControl;
     }

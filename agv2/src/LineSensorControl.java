@@ -1,4 +1,3 @@
-import TI.BoeBot;
 import TI.Timer;
 
 import java.util.ArrayList;
@@ -46,10 +45,12 @@ public class LineSensorControl implements Updatable {
             this.state = true;
         }
         if (timerStop.timeout()) {
-            this.stop = false;
-            this.stop2 = true;
-            this.timerStop2.setInterval(250);
-            this.driver.goToSpeed(1550);
+            if (this.stop) {
+                this.stop = false;
+                this.stop2 = true;
+                this.timerStop2.setInterval(250);
+                this.driver.goToSpeed(1550);
+            }
         }
         if (timerStop2.timeout()) {
             this.stop2 = false;

@@ -79,7 +79,7 @@ public class Robot implements LineSensorCallback, UltrasoneSensorCallback, Bluet
 
                 this.lineSensorControl.setStop(true);
                 this.lineSensorControl.getTimerStop().setInterval(5000);
-                this.notifications.ledOn("Red");
+                this.notifications.ledOn("Green");
 
             } else if (this.routePlanner.getCurrentAction().equals("D")) {
 
@@ -94,26 +94,27 @@ public class Robot implements LineSensorCallback, UltrasoneSensorCallback, Bluet
             this.notifications.ledOn("Red");
         } else if (pulse >= 100 && pulse < 500) {
             this.driver.goToSpeed(1450);
-            System.out.println(pulse);
             this.notifications.ledOn("Red");
         } else if (pulse >= 500 && pulse < 1000) {
-            this.notifications.ledOn("Green");
             if (this.driver.getSpeed() >= 1500) {
                 this.driver.goToSpeed(1500);
-                System.out.println(pulse);
             }
         } else if (pulse >= 1000) {
-            //this.notifications.ledOn("Blue");
+            if (this.notifications.getLedControl().getColor().equals("Red")) {
+                if (this.lineSensorControl.isOverride()) {
+                    this.notifications.ledOn("Pink");
+                } else {
+                    this.notifications.ledOn("Blue");
+                }
+            }
         }
     }
 
     public void bluetoothDetect(char character) {
-        System.out.println(character);
         this.routePlanner.dataToInstruction(character);
     }
 
     public void infraredDetect(String binary) {
-        System.out.println(binary);
         this.remoteControl.dataToAction(binary);
     }
 }

@@ -33,7 +33,12 @@ public class RemoteControl {
                 break;
             case "000010000000": //Number 1
                 this.lineSensorControl.setOverride(!this.lineSensorControl.isOverride());
-                this.notifications.ledOn("Yellow");
+                if (this.lineSensorControl.isOverride()) {
+                    this.driver.goToSpeed(1500);
+                    this.notifications.ledOn("Pink");
+                } else {
+                    this.notifications.ledOn("Blue");
+                }
                 break;
             default:
                 break;

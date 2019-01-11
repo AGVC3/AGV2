@@ -8,8 +8,10 @@ public class LEDControl implements Updatable {
 
     private ArrayList<LED> leds;
     private Timer timer;
+    private String color;
 
     public LEDControl () { // initializes the LED (value of pin must be between 0-5)
+        this.color = "";
         this.leds = new ArrayList<>();
         this.leds.add(new LED(0));
         this.leds.add(new LED(1));
@@ -31,25 +33,25 @@ public class LEDControl implements Updatable {
     public void setAllLedPinsColor(String color) {
         switch (color) {
             case "Red":
+                this.color = "Red";
                 for (LED led : this.leds) {
                     led.updateColor(50,0,0);
                 }
                 break;
             case "Green":
+                this.color = "Green";
                 for (LED led : this.leds) {
                     led.updateColor(0,10,0);
                 }
                 break;
             case "Blue":
+                this.color = "Blue";
                 for (LED led : this.leds) {
                     led.updateColor(0,0,10);
                 }
                 break;
-            case "Yellow":
-                for (LED led : this.leds) {
-                    led.updateColor(50,10,0);
-                }
-            case "Purple":
+            case "Pink":
+                this.color = "Pink";
                 for (LED led : this.leds) {
                     led.updateColor(50,0,10);
                 }
@@ -62,5 +64,7 @@ public class LEDControl implements Updatable {
         }
     }
 
-
+    public String getColor() {
+        return this.color;
+    }
 }
