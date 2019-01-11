@@ -47,11 +47,11 @@ public class Driver {
 
     public void turnSharp(String turnDirection) {
         if (turnDirection.equals("Left")) {
-            this.right.setTargetSpeed(1550);
-            this.left.setTargetSpeed(1450);
+            this.right.setTargetSpeed(1590);
+            this.left.setTargetSpeed(1470);
         } else if (turnDirection.equals("Right")) {
-            this.left.setTargetSpeed(1550);
-            this.right.setTargetSpeed(1450);
+            this.left.setTargetSpeed(1590);
+            this.right.setTargetSpeed(1470);
         }
     }
 

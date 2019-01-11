@@ -36,7 +36,6 @@ public class Robot implements LineSensorCallback, UltrasoneSensorCallback, Bluet
     }
 
     public void lineSensorDetect(ArrayList<Boolean> linesDetected) {
-        System.out.println(linesDetected);
         if (!linesDetected.get(0) && linesDetected.get(1) && !linesDetected.get(2)) { //straight forward
             this.driver.goToSpeed(1550); //1550
         } else if (linesDetected.get(0) && !linesDetected.get(1) && !linesDetected.get(2)) { //turn to the left
@@ -47,6 +46,7 @@ public class Robot implements LineSensorCallback, UltrasoneSensorCallback, Bluet
 //            this.driver.goToSpeed(1500);
             this.driver.emergencyBreak();
             this.lineSensorControl.setState(false);
+            this.lineSensorControl.getTimerLine().setInterval(600);
             this.routePlanner.dataToAction();
         } else if (linesDetected.get(0) && linesDetected.get(1) && linesDetected.get(2) && this.driver.getLeft().getSpeed() <= 1500) {
 //            this.driver.goToSpeed(1500);
@@ -64,11 +64,11 @@ public class Robot implements LineSensorCallback, UltrasoneSensorCallback, Bluet
 
             if (this.routePlanner.getCurrentAction().equals("R")) {                                                    //Do whatever action is necessary
 
-                this.driver.turn("Right");
+                this.driver.turnSharp("Right");
 
             } else if (this.routePlanner.getCurrentAction().equals("L")) {
 
-                this.driver.turn("Left");
+                this.driver.turnSharp("Left");
 
             } else if (this.routePlanner.getCurrentAction().equals("F")) {
 

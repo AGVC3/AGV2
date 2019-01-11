@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class LineSensorControl implements Updatable {
 
-    Timer timer = new Timer(5);
+    Timer timer = new Timer(10);
     Timer timerLine = new Timer(600);
     private boolean state;
     private boolean override;
@@ -52,5 +52,9 @@ public class LineSensorControl implements Updatable {
 
     public void setOverride(boolean override) {
         this.override = override;
+    }
+
+    public Timer getTimerLine() {
+        return timerLine;
     }
 }
