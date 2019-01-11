@@ -1,10 +1,8 @@
 public class Notifications{
 
     private LEDControl ledControl;
-    private Speaker speaker;
 
-    public Notifications(int pinSpeaker) {
-        this.speaker = new Speaker(pinSpeaker);
+    public Notifications() {
         this.ledControl = new LEDControl();
     }
 
@@ -17,6 +15,6 @@ public class Notifications{
     }
 
     public LEDControl getLedControl() {
-        return ledControl;
+        return this.ledControl;
     }
 }

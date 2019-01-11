@@ -1,6 +1,4 @@
 import TI.Timer;
-
-
 import java.util.ArrayList;
 
 public class RoutePlanner implements Updatable {

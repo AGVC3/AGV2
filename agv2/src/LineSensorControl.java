@@ -31,17 +31,17 @@ public class LineSensorControl implements Updatable {
     }
 
     public void update() {
-        if (state && !override && !stop && !stop2) {
-            if (timer.timeout()) {
+        if (this.state && !this.override && !this.stop && !this.stop2) {
+            if (this.timer.timeout()) {
                 ArrayList<Boolean> linesDetected = new ArrayList<>();
-                linesDetected.add(leftSensor.isState());
-                linesDetected.add(middleSensor.isState());
-                linesDetected.add(rightSensor.isState());
+                linesDetected.add(this.leftSensor.isState());
+                linesDetected.add(this.middleSensor.isState());
+                linesDetected.add(this.rightSensor.isState());
 //                System.out.println(linesDetected);
                 this.callback.lineSensorDetect(linesDetected);
             }
         }
-        if (timerLine.timeout()) {
+        if (this.timerLine.timeout()) {
             this.state = true;
         }
         if (timerStop.timeout()) {
@@ -52,13 +52,13 @@ public class LineSensorControl implements Updatable {
                 this.driver.goToSpeed(1550);
             }
         }
-        if (timerStop2.timeout()) {
+        if (this.timerStop2.timeout()) {
             this.stop2 = false;
         }
     }
 
     public boolean getState() {
-        return state;
+        return this.state;
     }
 
     public void setState(boolean state) {
@@ -66,7 +66,7 @@ public class LineSensorControl implements Updatable {
     }
 
     public boolean isOverride() {
-        return override;
+        return this.override;
     }
 
     public void setOverride(boolean override) {
@@ -74,7 +74,7 @@ public class LineSensorControl implements Updatable {
     }
 
     public boolean isStop() {
-        return stop;
+        return this.stop;
     }
 
     public void setStop(boolean stop) {

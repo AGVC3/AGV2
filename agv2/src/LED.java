@@ -9,6 +9,6 @@ public class LED {
     }
 
     public void updateColor(int r, int g, int b) {
-        BoeBot.rgbSet(pin, r, g, b);
+        BoeBot.rgbSet(this.pin, r, g, b);
     }
 }

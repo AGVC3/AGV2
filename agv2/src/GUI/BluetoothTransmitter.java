@@ -1,8 +1,6 @@
 package GUI;
 
-import TI.BoeBot;
 import jssc.SerialPort;
-import jssc.SerialPortException;
 
 public class BluetoothTransmitter {
 
@@ -16,31 +14,23 @@ public class BluetoothTransmitter {
 
     public void transmitRoute() {
         try {
-            serialPort.openPort();
-
-            serialPort.setParams(115200, 8, 1, 0);
-
-            serialPort.writeBytes(route.toLowerCase().getBytes());
-
-            serialPort.closePort();
-
-        } catch (Exception ex) {
-            System.out.println(ex);
+            this.serialPort.openPort();
+            this.serialPort.setParams(115200, 8, 1, 0);
+            this.serialPort.writeBytes(route.toLowerCase().getBytes());
+            this.serialPort.closePort();
+        } catch (Exception e) {
+            System.out.println(e);
         }
     }
 
     public void transmitEmergency() {
         try {
-            serialPort.openPort();
-
-            serialPort.setParams(115200, 8, 1, 0);
-
-            serialPort.writeBytes("e".getBytes());
-
-            serialPort.closePort();
-
-        } catch (Exception ex) {
-            System.out.println(ex);
+            this.serialPort.openPort();
+            this.serialPort.setParams(115200, 8, 1, 0);
+            this.serialPort.writeBytes("e".getBytes());
+            this.serialPort.closePort();
+        } catch (Exception e) {
+            System.out.println(e);
         }
     }
 

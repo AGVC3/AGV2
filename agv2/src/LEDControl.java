@@ -1,8 +1,6 @@
 import TI.BoeBot;
 import TI.Timer;
-
 import java.util.ArrayList;
-
 
 public class LEDControl implements Updatable {
 
@@ -20,12 +18,10 @@ public class LEDControl implements Updatable {
         this.leds.add(new LED(4));
         this.leds.add(new LED(5));
         this.timer = new Timer(100);
-
     }
 
-    @Override
     public void update() {
-        if (timer.timeout()) {
+        if (this.timer.timeout()) {
             BoeBot.rgbShow();
         }
     }

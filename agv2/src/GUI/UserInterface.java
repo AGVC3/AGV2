@@ -3,13 +3,9 @@ package GUI;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -20,7 +16,6 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class UserInterface extends Application {
 
@@ -62,7 +57,6 @@ public class UserInterface extends Application {
 
         String font = "Verdana";
         int size = 20;
-
 
         Label welcome = new Label("Welcome to C3's routeplanner!");
         welcome.setFont(Font.font(font, 18));
@@ -131,7 +125,6 @@ public class UserInterface extends Application {
         Button upload = new Button("Upload!");
         upload.setFont(Font.font(font, 13));
 
-
         TableView routesTable = new TableView();
         routesTable.setMaxHeight(200);
 
@@ -149,10 +142,10 @@ public class UserInterface extends Application {
 
         addRoute.setOnAction(event -> {
             this.currentRouteCode.add("D");
-            allRoutes.add(new Route (nameField.getText(), this.routeNameCurrent));
-            allRoutesCoded.add(new Route(nameField.getText(), this.currentRouteCode));
+            this.allRoutes.add(new Route (nameField.getText(), this.routeNameCurrent));
+            this.allRoutesCoded.add(new Route(nameField.getText(), this.currentRouteCode));
 
-            routesTable.setItems(allRoutes);
+            routesTable.setItems(this.allRoutes);
             routeCombo.getItems().add(nameField.getText());
 
             this.currentRouteCode.clear();
@@ -195,7 +188,7 @@ public class UserInterface extends Application {
         });
 
         upload.setOnAction(event -> {
-            for (Route element : allRoutesCoded) {
+            for (Route element : this.allRoutesCoded) {
                 if (element.getName().equals(routeCombo.getValue())) {
 
                     setUploadedRoute(element.getRouteArray());
@@ -208,7 +201,6 @@ public class UserInterface extends Application {
         emergency.setOnAction(event -> {
             this.bluetoothTransmitter.transmitEmergency();
         });
-
 
         nameHbox.getChildren().addAll(name,nameField, routeCurrent, routeCurrentText);
         infoVBox.getChildren().addAll(welcome, step1,step2,step3,emptyLabel);
@@ -228,14 +220,12 @@ public class UserInterface extends Application {
         selectRow.getChildren().addAll(bottomRow, emergency);
         selectRow.setSpacing(450);
 
-
         allVbox.getChildren().addAll(borderPaneInfo,routesTable, selectRow);
         allVbox.setSpacing(10);
 
         Scene scene = new Scene(allVbox, 800, 430);
         stage.setScene(scene);
         stage.show();
-
     }
 
     public String getRoute () {
@@ -243,7 +233,6 @@ public class UserInterface extends Application {
     }
 
     public void setUploadedRoute(String uploadedRoute) {
-
         System.out.println(uploadedRoute);
         this.uploadedRoute = uploadedRoute;
     }

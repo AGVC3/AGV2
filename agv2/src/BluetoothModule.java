@@ -14,11 +14,11 @@ public class BluetoothModule implements Updatable {
     }
 
     public void update() {
-        if (timer.timeout()) {
+        if (this.timer.timeout()) {
             if (this.conn.available() > 0) {
                 int data = this.conn.readByte();
                 System.out.println((char) data);
-                this.callback.bluetoothDetect((char) data);
+                this.callback.bluetoothDetect((char)data);
             }
         }
     }

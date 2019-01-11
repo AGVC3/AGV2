@@ -1,5 +1,3 @@
-import TI.BoeBot;
-
 import java.util.ArrayList;
 
 public class Robot implements LineSensorCallback, UltrasoneSensorCallback, BluetoothModuleCallback, RoutePlannerCallback, InfraredModuleCallback {
@@ -13,7 +11,7 @@ public class Robot implements LineSensorCallback, UltrasoneSensorCallback, Bluet
 
     public Robot() {
         this.driver = new Driver();
-        this.notifications = new Notifications(15);
+        this.notifications = new Notifications();
         this.routePlanner = new RoutePlanner(this.driver, this);
         this.lineSensorControl = new LineSensorControl(this, this.driver);
         this.remoteControl = new RemoteControl(this.driver, this.lineSensorControl, this.notifications);
@@ -61,26 +59,18 @@ public class Robot implements LineSensorCallback, UltrasoneSensorCallback, Bluet
             return;
         }
         if (!this.lineSensorControl.getState()) {                                                                       //When an action is present but the linefollowers are still on
-
             if (this.routePlanner.getCurrentAction().equals("R")) {                                                    //Do whatever action is necessary
-
                 this.driver.turnSharp("Right");
-
             } else if (this.routePlanner.getCurrentAction().equals("L")) {
-
                 this.driver.turnSharp("Left");
-
             } else if (this.routePlanner.getCurrentAction().equals("F")) {
                 this.lineSensorControl.getTimerStop2().setInterval(250);
                 this.lineSensorControl.setStop2(true);
                 this.driver.goToSpeed(1550);
-
             } else if (this.routePlanner.getCurrentAction().equals("S")) {
-
                 this.lineSensorControl.setStop(true);
                 this.lineSensorControl.getTimerStop().setInterval(5000);
                 this.notifications.ledOn("Green");
-
             } else if (this.routePlanner.getCurrentAction().equals("D")) {
 
             }
@@ -88,7 +78,6 @@ public class Robot implements LineSensorCallback, UltrasoneSensorCallback, Bluet
     }
 
     public void ultrasoneDetect(int pulse) {
-
         if (pulse > 17 && pulse < 100) {
             this.driver.emergencyBreak();
             this.notifications.ledOn("Red");

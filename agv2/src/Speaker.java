@@ -1,4 +1,5 @@
-import TI.*;
+import TI.PWM;
+import TI.Timer;
 
 public class Speaker {
     private int pin;

@@ -17,9 +17,8 @@ public class Wheel implements Updatable {
         this.timer = new Timer(5);
     }
 
-    @Override
     public void update() {
-        if (timer.timeout()) {
+        if (this.timer.timeout()) {
             int accelaration = 10;
             if (this.speed != this.targetSpeed) {
                 if ((Math.abs(this.speed - this.targetSpeed) > accelaration)) {

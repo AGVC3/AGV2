@@ -1,10 +1,7 @@
 package GUI;
 
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
-
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Route {
 

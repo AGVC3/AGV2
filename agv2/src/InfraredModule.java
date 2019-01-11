@@ -7,22 +7,21 @@ public class InfraredModule implements Updatable {
     private Timer timer;
     private InfraredModuleCallback callback;
 
-
     public InfraredModule (InfraredModuleCallback callback) {
         this.callback = callback;
         this.pin = 7;
         this.timer = new Timer(25);
     }
 
-    @Override
     public void update() {
-        if (timer.timeout()) {
-            int pulse = BoeBot.pulseIn(pin, false, 6000);
+        if (this.timer.timeout()) {
+            int pulse = BoeBot.pulseIn(this.pin, false, 6000);
             StringBuilder binaryCode = new StringBuilder();
             if (pulse > 2000) {
                 int[] signal = new int[12];
+
                 for (int i = 0; i < 12; i++) {
-                    signal[i] = BoeBot.pulseIn(pin, false, 20000);
+                    signal[i] = BoeBot.pulseIn(this.pin, false, 20000);
                 }
 
                 for (int i = 0; i < 12; i++) {
@@ -30,11 +29,8 @@ public class InfraredModule implements Updatable {
                 }
 
                 binaryCode.reverse();
-
                 this.callback.infraredDetect(binaryCode.toString());
-
             } else {
-
                 this.callback.infraredDetect(binaryCode.toString());
             }
         }

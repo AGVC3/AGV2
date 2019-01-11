@@ -12,7 +12,7 @@ public class UltrasoneSensor implements Updatable {
     }
 
     public void update() {
-        if (timer.timeout()) {
+        if (this.timer.timeout()) {
             BoeBot.digitalWrite(2, true);
             BoeBot.wait(0, 500);
             BoeBot.digitalWrite(2, false);
