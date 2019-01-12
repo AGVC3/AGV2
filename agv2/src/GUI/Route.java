@@ -23,12 +23,6 @@ public class Route {
         this.routeString = new SimpleStringProperty(routeString);
     }
 
-//    public ArrayList<String> getInvertedRoute() {
-//        ArrayList<String> reversedRoute = getRouteArray();
-//        Collections.reverse(reversedRoute);
-//        return reversedRoute;
-//    }
-
     public void reverseString () {
         char[] routeChar = this.routeArray.toCharArray();
         String tempRoute = "q";
@@ -56,14 +50,6 @@ public class Route {
     public String getRouteArray() {
         return this.routeArray;
     }
-
-//    public SimpleObjectProperty<ArrayList<String>> routeArrayProperty() {
-//        return this.routeArray;
-//    }
-
-//    public void setRouteArray(ArrayList<String> routeArray) {
-//        this.routeArray.(routeArray);
-//    }
 
     public String getRouteString() {
         return this.routeString.get();

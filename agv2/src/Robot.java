@@ -72,7 +72,7 @@ public class Robot implements LineSensorCallback, UltrasoneSensorCallback, Bluet
                 this.lineSensorControl.getTimerStop().setInterval(5000);
                 this.notifications.ledOn("Green");
             } else if (this.routePlanner.getCurrentAction().equals("D")) {
-
+                this.notifications.ledOn("Green");
             }
         }
     }
@@ -100,6 +100,7 @@ public class Robot implements LineSensorCallback, UltrasoneSensorCallback, Bluet
     }
 
     public void bluetoothDetect(char character) {
+        this.notifications.ledOn("Green");
         this.routePlanner.dataToInstruction(character);
     }
 

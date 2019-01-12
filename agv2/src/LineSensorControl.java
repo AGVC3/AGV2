@@ -8,7 +8,7 @@ public class LineSensorControl implements Updatable {
     private Timer timerLine = new Timer(600);
     private Timer timerStop = new Timer(5000);
     private Timer timerStop2 = new Timer(250);
-    private boolean state;
+    private boolean isState;
     private boolean override;
     private boolean stop;
     private boolean stop2;
@@ -24,14 +24,14 @@ public class LineSensorControl implements Updatable {
         this.rightSensor = new LineSensor(0);
         this.driver = driver;
         this.callback = callback;
-        this.state = true;
+        this.isState = true;
         this.override = false;
         this.stop = false;
         this.stop2 = false;
     }
 
     public void update() {
-        if (this.state && !this.override && !this.stop && !this.stop2) {
+        if (this.isState && !this.override && !this.stop && !this.stop2) {
             if (this.timer.timeout()) {
                 ArrayList<Boolean> linesDetected = new ArrayList<>();
                 linesDetected.add(this.leftSensor.isState());
@@ -42,7 +42,7 @@ public class LineSensorControl implements Updatable {
             }
         }
         if (this.timerLine.timeout()) {
-            this.state = true;
+            this.isState = true;
         }
         if (timerStop.timeout()) {
             if (this.stop) {
@@ -58,11 +58,11 @@ public class LineSensorControl implements Updatable {
     }
 
     public boolean getState() {
-        return this.state;
+        return this.isState;
     }
 
-    public void setState(boolean state) {
-        this.state = state;
+    public void setState(boolean isState) {
+        this.isState = isState;
     }
 
     public boolean isOverride() {

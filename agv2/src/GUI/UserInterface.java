@@ -62,9 +62,9 @@ public class UserInterface extends Application {
         welcome.setFont(Font.font(font, 18));
         welcome.setTextFill(Color.DARKRED);
 
-        Label step1 = new Label("Stap 1.  Enter your route using the buttons on the right.");
-        Label step2 = new Label("Stap 2.  Give the route a name.");
-        Label step3 = new Label("Stap 3.  Press add route!");
+        Label step1 = new Label("Step 1.  Enter your route using the buttons on the right.");
+        Label step2 = new Label("Step 2.  Give the route a name.");
+        Label step3 = new Label("Step 3.  Press add route!");
         Label emptyLabel = new Label("");
 
         step1.setFont(Font.font(font, 13));
