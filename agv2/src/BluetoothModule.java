@@ -14,7 +14,7 @@ public class BluetoothModule implements Updatable {
     }
 
     public void update() {
-        if (this.timer.timeout()) {
+        if (this.timer.timeout()) { //bluetooth data is received here
             if (this.conn.available() > 0) {
                 int data = this.conn.readByte();
                 System.out.println((char)data);

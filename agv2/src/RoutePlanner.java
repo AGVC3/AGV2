@@ -18,17 +18,17 @@ public class RoutePlanner implements Updatable {
         this.instructions = new ArrayList<>();
     }
 
-    public void dataToAction() { //Deze methode haalt een actie op en haalt deze uit de lijst
+    public void dataToAction() { //This method gets an action, and removes hit from the this.instructions arraylist
         try {
             this.currentAction = this.instructions.get(this.instructions.size() - 1);
             this.instructions.remove(this.instructions.size() - 1);
             System.out.println("current action: " + this.currentAction);
         } catch (Exception e) {
-            //System.out.println(e);
+            System.out.println(e);
         }
     }
 
-    public void dataToInstruction(char character) { //Deze methode converteerd de bluetooth input naar instructies in een lijst
+    public void dataToInstruction(char character) { //This method converts data of the BluetoothModule to an action in the this.instructions arraylist
         switch (character) {
             case 'f':
                 this.instructions.add("F");

@@ -14,7 +14,7 @@ public class InfraredModule implements Updatable {
     }
 
     public void update() {
-        if (this.timer.timeout()) { //Hier wordt het infrarood signaal opgevangen
+        if (this.timer.timeout()) { //here is the infrared being received
             int pulse = BoeBot.pulseIn(this.pin, false, 6000);
             StringBuilder binaryCode = new StringBuilder();
             if (pulse > 2000) {

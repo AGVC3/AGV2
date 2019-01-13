@@ -10,7 +10,7 @@ public class RemoteControl {
         this.notifications = notifications;
     }
 
-    public void dataToAction(String string) { //Hier wordt de data van de infraredModule binnengekregen en verwerkt tot acties
+    public void dataToAction(String string) { //The data of the InfraredModule class is here being transformed to actions
         switch (string) {
             case "000010010000"://UP
                 this.driver.goToSpeed(1550);

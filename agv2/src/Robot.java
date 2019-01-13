@@ -47,10 +47,6 @@ public class Robot implements LineSensorCallback, UltrasoneSensorCallback, Bluet
             this.lineSensorControl.setState(false);
             this.lineSensorControl.getTimerLine().setInterval(600);
             this.routePlanner.dataToAction();
-        } else if (linesDetected.get(0) && linesDetected.get(1) && linesDetected.get(2) && this.driver.getLeft().getSpeed() <= 1500) {
-//            this.driver.goToSpeed(1500);
-//            this.lineSensorControl.setState(false);
-//            this.routePlanner.dataToAction();
         }
     }
 
@@ -77,18 +73,18 @@ public class Robot implements LineSensorCallback, UltrasoneSensorCallback, Bluet
         }
     }
 
-    public void ultrasoneDetect(int pulse) {                                                                            //Hier wordt de data van de ultrasoonsensoren verwerkt tot acties
-        if (pulse > 17 && pulse < 100) {
+    public void ultrasoneDetect(int pulse) { //The data received by the UltrasoneSensor class is here being transformed to actions
+        if (pulse > 17 && pulse < 100) { //Emergency break
             this.driver.emergencyBreak();
             this.notifications.ledOn("Red");
-        } else if (pulse >= 100 && pulse < 500) {
+        } else if (pulse >= 100 && pulse < 500) { //Drive backwards if needed
             this.driver.goToSpeed(1450);
             this.notifications.ledOn("Red");
-        } else if (pulse >= 500 && pulse < 1000) {
+        } else if (pulse >= 500 && pulse < 1000) { //Slower stop
             if (this.driver.getSpeed() >= 1500) {
                 this.driver.goToSpeed(1500);
             }
-        } else if (pulse >= 1000) {
+        } else if (pulse >= 1000) { //This corrects the LEDs back to its right color
             if (this.notifications.getLedControl().getColor().equals("Red")) {
                 if (this.lineSensorControl.isOverride()) {
                     this.notifications.ledOn("Pink");

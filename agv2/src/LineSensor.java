@@ -8,12 +8,7 @@ public class LineSensor {
         this.pin = pin;
     }
 
-    public boolean isState() {
-        //System.out.println(BoeBot.analogRead(pin));
-        if (BoeBot.analogRead(this.pin) > 1500) {
-            return true;
-        } else {
-            return false;
-        }
+    public boolean isState() { //Line data is received here
+        return BoeBot.analogRead(this.pin) > 1500;
     }
 }

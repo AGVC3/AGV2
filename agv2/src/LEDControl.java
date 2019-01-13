@@ -8,7 +8,7 @@ public class LEDControl implements Updatable {
     private Timer timer;
     private String color;
 
-    public LEDControl () { // initializes the LED (value of pin must be between 0-5)
+    public LEDControl () { //initializes the LED (value of pin must be between 0-5)
         this.color = "";
         this.leds = new ArrayList<>();
         this.leds.add(new LED(0));
@@ -26,7 +26,7 @@ public class LEDControl implements Updatable {
         }
     }
 
-    public void setAllLedPinsColor(String color) { //Hier wordt door alle ledjes heengelopen en worden ze de goede kleur gemaakt.
+    public void setAllLedPinsColor(String color) { //Here are all the LEDs being changed to color X
         switch (color) {
             case "Red":
                 this.color = "Red";
@@ -54,7 +54,7 @@ public class LEDControl implements Updatable {
         }
     }
 
-    public void pinsAllOff () {
+    public void pinsAllOff () { //Every Led on the BoeBot off
         for (LED led : this.leds){
             led.updateColor( 0,0,0);
         }

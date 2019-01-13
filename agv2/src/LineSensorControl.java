@@ -31,17 +31,16 @@ public class LineSensorControl implements Updatable {
     }
 
     public void update() {
-        if (this.isState && !this.override && !this.isStop && !this.isStop2) { //Hier wordt de data van de drie lijnsensoren opgehaald, verzameld en doorgestuurd
+        if (this.isState && !this.override && !this.isStop && !this.isStop2) { //The data of all linesensors is here being collected, and send back to Robot.java
             if (this.timer.timeout()) {
                 ArrayList<Boolean> linesDetected = new ArrayList<>();
                 linesDetected.add(this.leftSensor.isState());
                 linesDetected.add(this.middleSensor.isState());
                 linesDetected.add(this.rightSensor.isState());
-//                System.out.println(linesDetected);
                 this.callback.lineSensorDetect(linesDetected);
             }
         }
-        if (this.timerLine.timeout()) {
+        if (this.timerLine.timeout()) { //if-functions to set the state of the line sensors on or off.
             this.isState = true;
         }
         if (timerStop.timeout()) {

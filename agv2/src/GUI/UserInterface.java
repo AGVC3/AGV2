@@ -30,7 +30,7 @@ public class UserInterface extends Application {
     public UserInterface () {
         this.bluetoothTransmitter = new BluetoothTransmitter();
         this.currentRouteUser = new ArrayList<>();
-        this.currentRouteCode = new ArrayList<>(); //Wordt aangemaakt voor toevoegen
+        this.currentRouteCode = new ArrayList<>(); //This is for the adding of the route
         this.routeNameCurrent = "";
         this.uploadedRoute = "";
     }

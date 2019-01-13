@@ -1,5 +1,3 @@
-import TI.Timer;
-
 public class Driver {
 
     private Wheel left;
@@ -15,7 +13,7 @@ public class Driver {
         this.right.setTargetSpeed(targetSpeed);
     }
 
-    public void turn(String turnDirection) {
+    public void turn(String turnDirection) { //this turn method is used when the actor presses the turn button on the remote control
         if (turnDirection.equals("Left")) {
             this.right.setTargetSpeed(1600);
         } else if (turnDirection.equals("Right")) {
@@ -23,7 +21,7 @@ public class Driver {
         }
     }
 
-    public void turnWhileDriving(String turnDirection) { //Deze methode wordt gebruikt om te sturen als de BoeBot een lijn volgt
+    public void turnWhileDriving(String turnDirection) { //this turn method is used when the BoeBot is following a line
         if (turnDirection.equals("Left")) {
             this.left.setTargetSpeed(1620); //1620
             this.right.setTargetSpeed(1510); //1520
@@ -33,7 +31,7 @@ public class Driver {
         }
     }
 
-    public void turnSharp(String turnDirection) { //Deze methode draait de BoeBot op een kruispunt
+    public void turnSharp(String turnDirection) { //This turn method is used when the BoeBot approaches a crossroad
         if (turnDirection.equals("Left")) {
             this.right.setTargetSpeed(1590);
             this.left.setTargetSpeed(1470);
