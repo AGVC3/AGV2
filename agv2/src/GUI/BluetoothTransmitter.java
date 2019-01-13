@@ -12,7 +12,7 @@ public class BluetoothTransmitter {
         this.route = "";
     }
 
-    public void transmitRoute() {
+    public void transmitRoute() { //Deze methode verstuurd de route naar de BoeBot
         try {
             this.serialPort.openPort();
             this.serialPort.setParams(115200, 8, 1, 0);
@@ -23,7 +23,7 @@ public class BluetoothTransmitter {
         }
     }
 
-    public void transmitEmergency() {
+    public void transmitEmergency() { //Deze methode verstuurt een emergency break
         try {
             this.serialPort.openPort();
             this.serialPort.setParams(115200, 8, 1, 0);

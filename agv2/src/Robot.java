@@ -43,7 +43,7 @@ public class Robot implements LineSensorCallback, UltrasoneSensorCallback, Bluet
         } else if (!linesDetected.get(0) && !linesDetected.get(1) && linesDetected.get(2)) { //turn to the right
             this.driver.turnWhileDriving("Left");
         } else if (linesDetected.get(0) && linesDetected.get(1) && linesDetected.get(2) && this.driver.getLeft().getSpeed() > 1500) { //crossroads logic
-            this.driver.emergencyBreak();
+            this.driver.goToSpeed(1500);
             this.lineSensorControl.setState(false);
             this.lineSensorControl.getTimerLine().setInterval(600);
             this.routePlanner.dataToAction();
@@ -59,7 +59,7 @@ public class Robot implements LineSensorCallback, UltrasoneSensorCallback, Bluet
             return;
         }
         if (!this.lineSensorControl.getState()) {                                                                       //When an action is present but the linefollowers are still on
-            if (this.routePlanner.getCurrentAction().equals("R")) {                                                    //Do whatever action is necessary
+            if (this.routePlanner.getCurrentAction().equals("R")) {                                                     //Do whatever action is necessary
                 this.driver.turnSharp("Right");
             } else if (this.routePlanner.getCurrentAction().equals("L")) {
                 this.driver.turnSharp("Left");
@@ -77,7 +77,7 @@ public class Robot implements LineSensorCallback, UltrasoneSensorCallback, Bluet
         }
     }
 
-    public void ultrasoneDetect(int pulse) {
+    public void ultrasoneDetect(int pulse) {                                                                            //Hier wordt de data van de ultrasoonsensoren verwerkt tot acties
         if (pulse > 17 && pulse < 100) {
             this.driver.emergencyBreak();
             this.notifications.ledOn("Red");

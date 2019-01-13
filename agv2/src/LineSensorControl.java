@@ -10,8 +10,8 @@ public class LineSensorControl implements Updatable {
     private Timer timerStop2 = new Timer(250);
     private boolean isState;
     private boolean override;
-    private boolean stop;
-    private boolean stop2;
+    private boolean isStop;
+    private boolean isStop2;
     private LineSensor leftSensor;
     private LineSensor middleSensor;
     private LineSensor rightSensor;
@@ -26,12 +26,12 @@ public class LineSensorControl implements Updatable {
         this.callback = callback;
         this.isState = true;
         this.override = false;
-        this.stop = false;
-        this.stop2 = false;
+        this.isStop = false;
+        this.isStop2 = false;
     }
 
     public void update() {
-        if (this.isState && !this.override && !this.stop && !this.stop2) {
+        if (this.isState && !this.override && !this.isStop && !this.isStop2) { //Hier wordt de data van de drie lijnsensoren opgehaald, verzameld en doorgestuurd
             if (this.timer.timeout()) {
                 ArrayList<Boolean> linesDetected = new ArrayList<>();
                 linesDetected.add(this.leftSensor.isState());
@@ -45,15 +45,15 @@ public class LineSensorControl implements Updatable {
             this.isState = true;
         }
         if (timerStop.timeout()) {
-            if (this.stop) {
-                this.stop = false;
-                this.stop2 = true;
+            if (this.isStop) {
+                this.isStop = false;
+                this.isStop2 = true;
                 this.timerStop2.setInterval(250);
                 this.driver.goToSpeed(1550);
             }
         }
         if (this.timerStop2.timeout()) {
-            this.stop2 = false;
+            this.isStop2 = false;
         }
     }
 
@@ -74,11 +74,11 @@ public class LineSensorControl implements Updatable {
     }
 
     public boolean isStop() {
-        return this.stop;
+        return this.isStop;
     }
 
     public void setStop(boolean stop) {
-        this.stop = stop;
+        this.isStop = stop;
     }
 
     public Timer getTimerLine() {
@@ -94,6 +94,6 @@ public class LineSensorControl implements Updatable {
     }
 
     public void setStop2(boolean stop2) {
-        this.stop2 = stop2;
+        this.isStop2 = stop2;
     }
 }

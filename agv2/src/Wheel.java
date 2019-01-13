@@ -17,7 +17,7 @@ public class Wheel implements Updatable {
         this.timer = new Timer(5);
     }
 
-    public void update() {
+    public void update() {                                                                                              //In deze methode worden de wielen geleidelijk aan geupdate naar de targetSpeed
         if (this.timer.timeout()) {
             int accelaration = 10;
             if (this.speed != this.targetSpeed) {

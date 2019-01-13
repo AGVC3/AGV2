@@ -26,7 +26,7 @@ public class LEDControl implements Updatable {
         }
     }
 
-    public void setAllLedPinsColor(String color) {
+    public void setAllLedPinsColor(String color) { //Hier wordt door alle ledjes heengelopen en worden ze de goede kleur gemaakt.
         switch (color) {
             case "Red":
                 this.color = "Red";

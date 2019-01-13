@@ -23,7 +23,7 @@ public class Driver {
         }
     }
 
-    public void turnWhileDriving(String turnDirection) {
+    public void turnWhileDriving(String turnDirection) { //Deze methode wordt gebruikt om te sturen als de BoeBot een lijn volgt
         if (turnDirection.equals("Left")) {
             this.left.setTargetSpeed(1620); //1620
             this.right.setTargetSpeed(1510); //1520
@@ -33,19 +33,7 @@ public class Driver {
         }
     }
 
-    public void action(String actionString) {
-        Timer timer = new Timer(100);
-        if (actionString.equals("Right")) {
-            while (true) {
-                turnWhileDriving("Left");
-                if (timer.timeout()) {
-                    break;
-                }
-            }
-        }
-    }
-
-    public void turnSharp(String turnDirection) {
+    public void turnSharp(String turnDirection) { //Deze methode draait de BoeBot op een kruispunt
         if (turnDirection.equals("Left")) {
             this.right.setTargetSpeed(1590);
             this.left.setTargetSpeed(1470);
